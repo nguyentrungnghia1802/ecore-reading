@@ -745,20 +745,22 @@ feat: add local ecore file workspace flow
 
 ### Checklist
 
-- [ ] Build package → classifier-kind → classifier tree from EcoreModel indexes.
-- [ ] Distinguish class/enum/datatype by icon + text, not color only.
-- [ ] Support nested packages.
-- [ ] Single click selects semantic ID and centers target when needed.
-- [ ] Show diagnostic badge counts.
-- [ ] Make sidebar collapsible and preserve canvas size correctly.
-- [ ] Add virtualization only if profiling shows need on stress fixture.
-- [ ] Add component/E2E tests for duplicate classifier names in different packages.
+- [x] Build package → classifier-kind → classifier tree from EcoreModel indexes.
+- [x] Distinguish class/enum/datatype by icon + text, not color only.
+- [x] Support nested packages.
+- [x] Single click selects semantic ID and centers target when needed.
+- [x] Show diagnostic badge counts.
+- [x] Make sidebar collapsible and preserve canvas size correctly.
+- [x] Add virtualization only if profiling shows need on stress fixture.
+- [x] Add component/E2E tests for duplicate classifier names in different packages.
 
 ### Acceptance
 
-- [ ] Same-name classifiers navigate to correct semantic IDs.
-- [ ] Opening/closing explorer does not trigger auto-layout.
-- [ ] Keyboard can reach tree items/actions.
+- [x] Same-name classifiers navigate to correct semantic IDs.
+- [x] Opening/closing explorer does not trigger auto-layout.
+- [x] Keyboard can reach tree items/actions.
+
+Completion note (2026-09-12): P2-02 hierarchical Model Explorer added with package/classifier tree, icon/text distinctions, nested packages, duplicate classifier name disambiguation by semantic ID, collapsible sidebar, unit tests (2 tests), and Playwright E2E suite (2 tests) passed.
 
 ### Commit
 

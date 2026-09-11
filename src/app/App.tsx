@@ -1,8 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
-import { DiagramCanvas, type SemanticSelection } from '../renderer';
+import { DiagramCanvas, selectionForSemanticIds, type SemanticSelection } from '../renderer';
 import { EmptyState } from './components/EmptyState';
 import { ErrorState } from './components/ErrorState';
 import { LoadingState } from './components/LoadingState';
+import { ModelExplorer } from './components/ModelExplorer';
 import { WorkspaceHeader } from './components/WorkspaceHeader';
 import { WorkspaceStatusBar } from './components/WorkspaceStatusBar';
 import {
@@ -14,6 +15,7 @@ import type { WorkspaceState } from './state/workspace-types';
 export function App() {
   const [workspace, setWorkspace] = useState<WorkspaceState>(createEmptyWorkspace);
   const [selection, setSelection] = useState<SemanticSelection | null>(null);
+  const [isExplorerOpen, setIsExplorerOpen] = useState(true);
 
   const handleOpenFile = useCallback(async (file: File) => {
     setWorkspace({
@@ -134,6 +136,18 @@ export function App() {
           />
 
           <main className="workspace-main">
+            <ModelExplorer
+              model={workspace.model}
+              selectedSemanticId={selection?.semanticIds[0] ?? null}
+              onSelectSemanticId={(id) => {
+                setSelection(selectionForSemanticIds('node', [id]));
+              }}
+              isOpen={isExplorerOpen}
+              onToggleOpen={() => {
+                setIsExplorerOpen((open) => !open);
+              }}
+            />
+
             <div className="workspace-canvas-container">
               <DiagramCanvas
                 layout={workspace.layout}
