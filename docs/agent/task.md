@@ -708,21 +708,23 @@ Phase 2 turns the trustworthy core into the polished exploration product. These 
 
 ### Checklist
 
-- [ ] Implement empty state with drag/drop and native file picker.
-- [ ] Show local-processing privacy statement.
-- [ ] Connect file ingestion to parser/resolver/layout pipeline without adding backend upload.
-- [ ] Show parsing/layout progress states without freezing the entire shell.
-- [ ] Implement invalid-file screen with actionable diagnostic and “Open another file.”
-- [ ] Recover from invalid file to valid file without browser refresh.
-- [ ] Display loaded source base filename safely.
-- [ ] Add Playwright flow for valid file, invalid file, then valid recovery.
+- [x] Implement empty state with drag/drop and native file picker.
+- [x] Show local-processing privacy statement.
+- [x] Connect file ingestion to parser/resolver/layout pipeline without adding backend upload.
+- [x] Show parsing/layout progress states without freezing the entire shell.
+- [x] Implement invalid-file screen with actionable diagnostic and “Open another file.”
+- [x] Recover from invalid file to valid file without browser refresh.
+- [x] Display loaded source base filename safely.
+- [x] Add Playwright flow for valid file, invalid file, then valid recovery.
 
 ### Acceptance
 
-- [ ] First-time user can open a fixture with no configuration.
-- [ ] Error state never presents partial invalid graph as trustworthy.
-- [ ] File content is not persisted or uploaded.
-- [ ] Relevant E2E tests pass.
+- [x] First-time user can open a fixture with no configuration.
+- [x] Error state never presents partial invalid graph as trustworthy.
+- [x] File content is not persisted or uploaded.
+- [x] Relevant E2E tests pass.
+
+Completion note (2026-09-12): P2-01 empty state, drag/drop, local processing notice, loading progress, actionable error recovery, safe filename display, unit tests (8 tests in App and workspace controller), and Playwright E2E recovery flow passed.
 
 ### Commit
 
