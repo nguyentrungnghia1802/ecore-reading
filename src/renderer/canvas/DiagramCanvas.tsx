@@ -224,7 +224,10 @@ function DiagramCanvasInner({
         nodesDraggable={true}
         nodeTypes={nodeTypes}
         onEdgeClick={handleEdgeClick}
-        onMove={(_event, viewport) => setIsLowZoom(viewport.zoom < 0.45)}
+        onMove={(_event, viewport) => {
+          const nextLow = viewport.zoom < 0.45;
+          setIsLowZoom((prev) => (prev !== nextLow ? nextLow : prev));
+        }}
         onNodeClick={handleNodeClick}
         onNodeDragStop={handleNodeDragStop}
         onPaneClick={() => publishSelection(null)}

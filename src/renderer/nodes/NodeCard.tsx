@@ -1,4 +1,4 @@
-import type { MouseEvent } from 'react';
+import { memo, type MouseEvent } from 'react';
 import type { UmlNodeData } from '../canvas/react-flow-adapter';
 
 export interface NodeCardProps {
@@ -15,7 +15,7 @@ function accessibleKind(data: UmlNodeData): string {
   return data.kind;
 }
 
-export function NodeCard({ data }: NodeCardProps) {
+export const NodeCard = memo(function NodeCard({ data }: NodeCardProps) {
   const selectRow = (event: MouseEvent<HTMLButtonElement>, semanticId: string) => {
     event.stopPropagation();
     data.onSelectRow?.(semanticId);
@@ -84,4 +84,4 @@ export function NodeCard({ data }: NodeCardProps) {
       )}
     </article>
   );
-}
+});

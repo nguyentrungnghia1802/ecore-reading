@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="stress" nsURI="urn:ecore-visualizer:stress" nsPrefix="stress">
+  <eClassifiers xsi:type="ecore:EClass" name="Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity001" upperBound="-1" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity001"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity001" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity002" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity002"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity002" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity003" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity003"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity003" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity004" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity004"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity004" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity005" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity005"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity005" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity006" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity006"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity006" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity007" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity007"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity007" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity008" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity008"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity008" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity009" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity009"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity009" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity010" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity010"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity010" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity011" upperBound="-1" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity011"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity011" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity012" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity012"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity012" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity013" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity013"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity013" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity014" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity014"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity014" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity015" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity015"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity015" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity016" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity016"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity016" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity017" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity017"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity017" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity018" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity018"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity018" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity019" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity019"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity019" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity020" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity020"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity020" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity021" upperBound="-1" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity021"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity021" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity022" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity022"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity022" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity023" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity023"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity023" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity024" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity024"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity024" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity025" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity025"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity025" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity026" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity026"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity026" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity027" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity027"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity027" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity028" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity028"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity028" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity029" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity029"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity029" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity030" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity030"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity030" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity031" upperBound="-1" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity031"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity031" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity032" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity032"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity032" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity033" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity033"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity033" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity034" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity034"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity034" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity035" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity035"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity035" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity036" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity036"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity036" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity037" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity037"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity037" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity038" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity038"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity038" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity039" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity039"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity039" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity040" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity040"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity040" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity041" upperBound="-1" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity041"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity041" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity042" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity042"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity042" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity043" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity043"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity043" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity044" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity044"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity044" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity045" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity045"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity045" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity046" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity046"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity046" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity047" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity047"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity047" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity048" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity048"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity048" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity049" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity049"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity049" eSuperTypes="#//Entity000">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link0" eType="#//Entity000" upperBound="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link1" eType="#//Entity000"/>
+  </eClassifiers>
+</ecore:EPackage>

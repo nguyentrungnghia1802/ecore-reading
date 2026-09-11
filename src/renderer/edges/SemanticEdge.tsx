@@ -1,5 +1,5 @@
 import { BaseEdge, type EdgeProps } from '@xyflow/react';
-import type { CSSProperties } from 'react';
+import { memo, type CSSProperties } from 'react';
 import {
   edgeEndLabels,
   edgeMarkerShapes,
@@ -9,7 +9,7 @@ import {
 } from '../../diagram/notation';
 import type { SemanticFlowEdge } from '../canvas/react-flow-adapter';
 
-export function SemanticEdge({ data, style }: EdgeProps<SemanticFlowEdge>) {
+export const SemanticEdge = memo(function SemanticEdge({ data, style }: EdgeProps<SemanticFlowEdge>) {
   if (data === undefined) return null;
 
   const { relation, selectedState } = data;
@@ -50,4 +50,4 @@ export function SemanticEdge({ data, style }: EdgeProps<SemanticFlowEdge>) {
       ))}
     </>
   );
-}
+});

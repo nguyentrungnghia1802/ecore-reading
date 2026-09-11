@@ -1,8 +1,9 @@
 import { Handle, Position, type NodeProps } from '@xyflow/react';
+import { memo } from 'react';
 import type { UmlFlowNode } from '../canvas/react-flow-adapter';
 import { NodeCard } from './NodeCard';
 
-export function UmlNode({ data }: NodeProps<UmlFlowNode>) {
+export const UmlNode = memo(function UmlNode({ data }: NodeProps<UmlFlowNode>) {
   return (
     <>
       <Handle className="uml-node__handle" position={Position.Left} type="target" />
@@ -10,4 +11,4 @@ export function UmlNode({ data }: NodeProps<UmlFlowNode>) {
       <Handle className="uml-node__handle" position={Position.Right} type="source" />
     </>
   );
-}
+});

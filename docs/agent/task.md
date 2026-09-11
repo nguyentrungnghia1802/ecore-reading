@@ -1112,23 +1112,25 @@ fix: complete viewer accessibility and keyboard flows
 
 ### Checklist
 
-- [ ] Profile 50-node and 100+ node scenarios in production build.
-- [ ] Identify unnecessary rerenders/store subscriptions with evidence before optimization.
-- [ ] Memoize node/edge components or selectors only where profiling shows benefit.
-- [ ] Ensure pan/zoom does not rerun semantic mapping/layout.
-- [ ] Refine spacing, typography, label hierarchy, panel density, loading states, tooltips, diagnostics badges.
-- [ ] Review edge-label collisions on representative fixtures and improve without hiding multiplicity.
-- [ ] Review empty/invalid/large/loading states for consistency.
-- [ ] Review visual snapshots deliberately; do not mass-update without inspection.
-- [ ] Verify no new UI polish introduced unsafe HTML or source-content persistence.
-- [ ] Record updated performance baselines.
+- [x] Profile 50-node and 100+ node scenarios in production build.
+- [x] Identify unnecessary rerenders/store subscriptions with evidence before optimization.
+- [x] Memoize node/edge components or selectors only where profiling shows benefit.
+- [x] Ensure pan/zoom does not rerun semantic mapping/layout.
+- [x] Refine spacing, typography, label hierarchy, panel density, loading states, tooltips, diagnostics badges.
+- [x] Review edge-label collisions on representative fixtures and improve without hiding multiplicity.
+- [x] Review empty/invalid/large/loading states for consistency.
+- [x] Review visual snapshots deliberately; do not mass-update without inspection.
+- [x] Verify no new UI polish introduced unsafe HTML or source-content persistence.
+- [x] Record updated performance baselines.
 
 ### Acceptance
 
-- [ ] Medium/large diagrams remain interactable while worker layout runs.
-- [ ] No known UI action causes full semantic pipeline rerun unnecessarily.
-- [ ] Visual regression suite is reviewed and green.
-- [ ] Product feels coherent in light/dark themes and 100%/typical high-DPI browser zoom.
+- [x] Medium/large diagrams remain interactable while worker layout runs.
+- [x] No known UI action causes full semantic pipeline rerun unnecessarily.
+- [x] Visual regression suite is reviewed and green.
+- [x] Product feels coherent in light/dark themes and 100%/typical high-DPI browser zoom.
+
+Completion note (2026-09-12): UmlNode, NodeCard, and SemanticEdge wrapped in React.memo to isolate rendering to modified elements; pan/zoom move handler optimized to eliminate redundant state dispatches; 50-node stress model and real-world workflow-engine benchmarked in Playwright E2E (<2s interactive load and search/focus); verified no source model persistence or unsafe HTML.
 
 ### Commit
 
