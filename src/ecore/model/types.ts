@@ -98,7 +98,7 @@ export interface EcoreDataType extends EcoreClassifierBase {
 }
 
 interface EcoreTypedElement {
-  type: ResolvedClassifierRef;
+  type: ResolvedClassifierRef | null;
   genericType?: GenericTypeRef;
   multiplicity: Multiplicity;
   ordered: boolean;
@@ -126,7 +126,7 @@ export interface EcoreAttribute extends EcoreStructuralFeatureBase {
 
 export interface EcoreReference extends EcoreStructuralFeatureBase {
   kind: 'reference';
-  target: ResolvedClassifierRef;
+  target: ResolvedClassifierRef | null;
   containment: boolean;
   oppositeReferenceId?: string;
   rawOpposite?: string;
@@ -166,5 +166,7 @@ export interface EcoreModel {
   classifierById: ReadonlyMap<string, EcoreClassifier>;
   featureById: ReadonlyMap<string, EcoreFeature>;
   operationById: ReadonlyMap<string, EcoreOperation>;
+  packageById: ReadonlyMap<string, EcorePackage>;
+  parameterById: ReadonlyMap<string, EcoreParameter>;
   diagnostics: Diagnostic[];
 }

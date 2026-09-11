@@ -11,6 +11,15 @@ export {
 export type { SemanticId } from './ids';
 export { formatMultiplicity, normalizeMultiplicity } from './multiplicity';
 export type { Multiplicity, MultiplicityResult } from './multiplicity';
+export { buildEcoreModel } from './build-ecore-model';
+export {
+  lookupClassifier,
+  lookupFeature,
+  lookupOperation,
+  lookupPackage,
+  lookupParameter,
+} from './lookup';
+export type { LookupResult } from './lookup';
 export type { SourceMetadata } from './source-metadata';
 export type {
   EcoreAnnotation,

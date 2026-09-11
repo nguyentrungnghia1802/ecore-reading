@@ -256,28 +256,30 @@ Convert the raw AST into the canonical semantic model used by every later featur
 
 ### Checklist
 
-- [ ] Write failing tests for Ecore default values: bounds, booleans, ordered/unique, containment, resolveProxies, structural-feature flags.
-- [ ] Assign deterministic semantic IDs to packages, classifiers, features, operations, parameters, literals, and type parameters.
-- [ ] Build package/classifier/feature indexes once and expose read-only lookup helpers.
-- [ ] Resolve EAttribute datatypes and EReference targets using P1-03 resolver.
-- [ ] Resolve all `eSuperTypes`, including multiple inheritance.
-- [ ] Preserve unresolved external supertypes explicitly.
-- [ ] Normalize multiplicity `-1` to semantic `'unbounded'` while retaining raw source value.
-- [ ] Detect invalid finite bounds (`lower > upper`) and invalid negative values other than Ecore's unbounded convention.
-- [ ] Detect inheritance cycles and emit involved semantic IDs.
-- [ ] Preserve annotation/source metadata on semantic entities.
-- [ ] Ensure each child knows its owner ID and each owner lists child IDs in source order.
-- [ ] Define lookup helpers that return explicit result types rather than throwing for normal unresolved conditions.
-- [ ] Add integration test: fixture text → raw parser → resolver → EcoreModel.
+- [x] Write failing tests for Ecore default values: bounds, booleans, ordered/unique, containment, resolveProxies, structural-feature flags.
+- [x] Assign deterministic semantic IDs to packages, classifiers, features, operations, parameters, literals, and type parameters.
+- [x] Build package/classifier/feature indexes once and expose read-only lookup helpers.
+- [x] Resolve EAttribute datatypes and EReference targets using P1-03 resolver.
+- [x] Resolve all `eSuperTypes`, including multiple inheritance.
+- [x] Preserve unresolved external supertypes explicitly.
+- [x] Normalize multiplicity `-1` to semantic `'unbounded'` while retaining raw source value.
+- [x] Detect invalid finite bounds (`lower > upper`) and invalid negative values other than Ecore's unbounded convention.
+- [x] Detect inheritance cycles and emit involved semantic IDs.
+- [x] Preserve annotation/source metadata on semantic entities.
+- [x] Ensure each child knows its owner ID and each owner lists child IDs in source order.
+- [x] Define lookup helpers that return explicit result types rather than throwing for normal unresolved conditions.
+- [x] Add integration test: fixture text → raw parser → resolver → EcoreModel.
 
 ### Acceptance
 
-- [ ] No coordinate/render fields exist in EcoreModel.
-- [ ] Every semantic entity has a stable unique ID.
-- [ ] Multiple inheritance fixture resolves all supertypes.
-- [ ] Invalid cycle produces diagnostic but does not crash model construction.
-- [ ] Default-value tests match official Ecore behavior represented by project docs.
-- [ ] Full typecheck/lint/unit suite passes.
+- [x] No coordinate/render fields exist in EcoreModel.
+- [x] Every semantic entity has a stable unique ID.
+- [x] Multiple inheritance fixture resolves all supertypes.
+- [x] Invalid cycle produces diagnostic but does not crash model construction.
+- [x] Default-value tests match official Ecore behavior represented by project docs.
+- [x] Full typecheck/lint/unit suite passes.
+
+Completion note (2026-09-11): semantic-model suite (9 tests), full unit suite (69 tests), typecheck, and lint passed.
 
 ### Commit
 
