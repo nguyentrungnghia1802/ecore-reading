@@ -10,6 +10,7 @@ import type {
   RawETypeParameter,
 } from '../raw';
 import { buildLocalEcoreIndex, resolveClassifierRef, type LocalEcoreIndex } from '../resolver';
+import { resolveGenericType } from '../resolver/resolve-generic-type';
 import { addInheritanceCycleDiagnostics } from '../validation/inheritance-cycles';
 import { resolveAndValidateOpposites } from '../validation/opposites';
 import type { Diagnostic } from './diagnostic';
@@ -83,6 +84,8 @@ function resolveType(
 function typeParameters(
   rawParameters: RawETypeParameter[],
   ownerId: string,
+  index: LocalEcoreIndex,
+  diagnostics: Diagnostic[],
 ): EcoreTypeParameter[] {
   return rawParameters.map((parameter) => {
     const name = parameter.name ?? `@type-parameter.${parameter.sourceOrder}`;
@@ -90,7 +93,7 @@ function typeParameters(
       id: typeParameterId(ownerId, name, parameter.sourceOrder),
       ownerId,
       name,
-      bounds: [],
+      bounds: parameter.bounds.map((bound) => resolveGenericType(bound, index, diagnostics)),
       annotations: semanticAnnotations(parameter.annotations),
       source: parameter.metadata,
     };
@@ -106,6 +109,9 @@ function typedValues(
   diagnostics.push(...normalized.diagnostics);
   return {
     type: resolveType(raw.rawType, raw.path, index, diagnostics),
+    ...(raw.genericType === undefined
+      ? {}
+      : { genericType: resolveGenericType(raw.genericType, index, diagnostics) }),
     multiplicity: normalized.multiplicity,
     ordered: rawBoolean(raw.rawAttributes, 'ordered', true),
     unique: rawBoolean(raw.rawAttributes, 'unique', true),
@@ -150,7 +156,7 @@ function operation(
     parameterIds: parameters.map((item) => item.id),
     parameters,
     exceptionRefs,
-    typeParameters: typeParameters(raw.typeParameters, id),
+    typeParameters: typeParameters(raw.typeParameters, id, index, diagnostics),
     annotations: semanticAnnotations(raw.annotations),
     source: raw.metadata,
   };
@@ -270,7 +276,7 @@ function semanticClassifier(
       attributeIds: classFeatures.filter((item) => item.kind === 'attribute').map((item) => item.id),
       referenceIds: classFeatures.filter((item) => item.kind === 'reference').map((item) => item.id),
       operationIds: operations.map((item) => item.id),
-      typeParameters: typeParameters(raw.typeParameters, id),
+      typeParameters: typeParameters(raw.typeParameters, id, state.index, state.diagnostics),
     };
     return result;
   }
@@ -293,7 +299,7 @@ function semanticClassifier(
           source: literal.metadata,
         };
       }),
-      typeParameters: typeParameters(raw.typeParameters, id),
+      typeParameters: typeParameters(raw.typeParameters, id, state.index, state.diagnostics),
     };
     return result;
   }
@@ -303,7 +309,7 @@ function semanticClassifier(
     ...(raw.rawAttributes.instanceClassName === undefined ? {} : { instanceClassName: raw.rawAttributes.instanceClassName }),
     ...(raw.rawAttributes.instanceTypeName === undefined ? {} : { instanceTypeName: raw.rawAttributes.instanceTypeName }),
     serializable: rawBoolean(raw.rawAttributes, 'serializable', true),
-    typeParameters: typeParameters(raw.typeParameters, id),
+    typeParameters: typeParameters(raw.typeParameters, id, state.index, state.diagnostics),
   };
   return result;
 }
@@ -354,6 +360,10 @@ export function buildEcoreModel(document: RawEcoreDocument): EcoreModel {
   addInheritanceCycleDiagnostics(state.classifiers, state.diagnostics);
 
   const parameters = state.operations.flatMap((item) => item.parameters);
+  const allTypeParameters = [
+    ...state.classifiers.flatMap((item) => item.typeParameters),
+    ...state.operations.flatMap((item) => item.typeParameters),
+  ];
   return {
     sourceName: document.sourceName,
     packages: state.packages,
@@ -365,6 +375,7 @@ export function buildEcoreModel(document: RawEcoreDocument): EcoreModel {
     featureById: new Map(state.features.map((item) => [item.id, item])),
     operationById: new Map(state.operations.map((item) => [item.id, item])),
     parameterById: new Map(parameters.map((item) => [item.id, item])),
+    typeParameterById: new Map(allTypeParameters.map((item) => [item.id, item])),
     diagnostics: state.diagnostics,
   };
 }

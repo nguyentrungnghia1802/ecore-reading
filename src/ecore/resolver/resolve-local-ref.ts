@@ -4,11 +4,17 @@ import {
   featureId,
   operationId,
   packageId,
+  typeParameterId,
 } from '../model';
 import type { RawEClassifier, RawEcoreDocument, RawEClass, RawEPackage } from '../raw';
 import { parseEcoreUriRef, type ParsedEcoreUriRef } from './parse-ecore-uri-ref';
 
-export type LocalEcoreTargetKind = 'package' | 'classifier' | 'feature' | 'operation';
+export type LocalEcoreTargetKind =
+  | 'package'
+  | 'classifier'
+  | 'feature'
+  | 'operation'
+  | 'type-parameter';
 
 export interface LocalEcoreTarget {
   kind: LocalEcoreTargetKind;
@@ -60,6 +66,17 @@ function indexClassMembers(
   positionalFragment: string,
   map: Map<string, LocalEcoreTarget[]>,
 ): void {
+  for (const parameter of classifier.typeParameters) {
+    const name = parameter.name ?? fallbackName('type-parameter', parameter.sourceOrder);
+    const parameterTarget: LocalEcoreTarget = {
+      kind: 'type-parameter',
+      id: typeParameterId(target.id, name, parameter.sourceOrder),
+      name,
+      path: parameter.path,
+    };
+    add(map, `${nameFragment}/${name}`, parameterTarget);
+    add(map, `${positionalFragment}/${name}`, parameterTarget);
+  }
   for (const feature of classifier.structuralFeatures) {
     const name = feature.name ?? fallbackName('feature', feature.sourceOrder);
     const featureTarget: LocalEcoreTarget = {
@@ -82,6 +99,18 @@ function indexClassMembers(
     };
     add(map, `${nameFragment}/${name}`, operationTarget);
     add(map, `${positionalFragment}/${name}`, operationTarget);
+    for (const parameter of operation.typeParameters) {
+      const parameterName =
+        parameter.name ?? fallbackName('type-parameter', parameter.sourceOrder);
+      const parameterTarget: LocalEcoreTarget = {
+        kind: 'type-parameter',
+        id: typeParameterId(operationTarget.id, parameterName, parameter.sourceOrder),
+        name: parameterName,
+        path: parameter.path,
+      };
+      add(map, `${nameFragment}/${name}/${parameterName}`, parameterTarget);
+      add(map, `${positionalFragment}/${name}/${parameterName}`, parameterTarget);
+    }
   }
 }
 

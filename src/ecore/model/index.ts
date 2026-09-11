@@ -12,6 +12,7 @@ export type { SemanticId } from './ids';
 export { formatMultiplicity, normalizeMultiplicity } from './multiplicity';
 export type { Multiplicity, MultiplicityResult } from './multiplicity';
 export { buildEcoreModel } from './build-ecore-model';
+export { formatGenericType } from './format-generic-type';
 export {
   lookupClassifier,
   lookupFeature,

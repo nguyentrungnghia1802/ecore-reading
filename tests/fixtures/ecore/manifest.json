@@ -11,5 +11,6 @@
   "generics.ecore": "EClass and operation generic types and parameters.",
   "xmi-wrapper.ecore": "xmi:XMI wrapper containing an EPackage.",
   "malformed.xml": "Intentionally malformed XML for parser diagnostics.",
-  "doctype.xml": "Unsafe DOCTYPE input rejected before DOM parsing."
+  "doctype.xml": "Unsafe DOCTYPE input rejected before DOM parsing.",
+  "real-world/advanced.ecore": "Real-world-like generics, annotations, inheritance, references, exceptions, enum and datatype metadata."
 }

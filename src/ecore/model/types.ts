@@ -168,5 +168,6 @@ export interface EcoreModel {
   operationById: ReadonlyMap<string, EcoreOperation>;
   packageById: ReadonlyMap<string, EcorePackage>;
   parameterById: ReadonlyMap<string, EcoreParameter>;
+  typeParameterById: ReadonlyMap<string, EcoreTypeParameter>;
   diagnostics: Diagnostic[];
 }

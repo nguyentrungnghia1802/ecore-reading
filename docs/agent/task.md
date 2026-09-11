@@ -355,24 +355,26 @@ Prevent “common simple files work, research-grade metamodels lose information�
 
 ### Checklist
 
-- [ ] Add recursive GenericTypeRef construction tests.
-- [ ] Resolve classifier-based generic types and type-parameter-based generic types distinctly.
-- [ ] Preserve upper/lower generic bounds and nested type arguments.
-- [ ] Parse/resolve EClass and EOperation type parameters.
-- [ ] Parse/resolve EOperation EExceptions where serialized.
-- [ ] Preserve EAnnotation `source`, detail key/value pairs, and parseable nested data.
-- [ ] Add formatter tests for representative generic signatures without flattening the semantic storage prematurely.
-- [ ] Test user-defined EDataType and EEnum metadata.
-- [ ] Test explicit enum literal `value`/`literal` values.
-- [ ] Verify unknown annotations remain inspectable and are never executed.
-- [ ] Add at least one real-world-like fixture combining generics, annotations, inheritance, and references.
+- [x] Add recursive GenericTypeRef construction tests.
+- [x] Resolve classifier-based generic types and type-parameter-based generic types distinctly.
+- [x] Preserve upper/lower generic bounds and nested type arguments.
+- [x] Parse/resolve EClass and EOperation type parameters.
+- [x] Parse/resolve EOperation EExceptions where serialized.
+- [x] Preserve EAnnotation `source`, detail key/value pairs, and parseable nested data.
+- [x] Add formatter tests for representative generic signatures without flattening the semantic storage prematurely.
+- [x] Test user-defined EDataType and EEnum metadata.
+- [x] Test explicit enum literal `value`/`literal` values.
+- [x] Verify unknown annotations remain inspectable and are never executed.
+- [x] Add at least one real-world-like fixture combining generics, annotations, inheritance, and references.
 
 ### Acceptance
 
-- [ ] Advanced constructs survive parse → semantic model round trip without silent loss.
-- [ ] Generic formatter output is deterministic.
-- [ ] Annotation content is stored as data only.
-- [ ] Full typecheck/lint/unit suite passes.
+- [x] Advanced constructs survive parse → semantic model round trip without silent loss.
+- [x] Generic formatter output is deterministic.
+- [x] Annotation content is stored as data only.
+- [x] Full typecheck/lint/unit suite passes.
+
+Completion note (2026-09-11): advanced semantic suite (7 tests), full unit suite (85 tests), typecheck, and lint passed.
 
 ### Commit
 
