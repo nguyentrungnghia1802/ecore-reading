@@ -1576,6 +1576,222 @@ main:not(.workspace-main) {
   border: 1px solid #cbd5e1;
 }
 
+/* ==========================================================================
+   Export Dialog Modal
+   ========================================================================== */
+.export-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(15 23 42 / 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+  animation: fadeIn 120ms ease;
+}
+
+.export-dialog {
+  width: 100%;
+  max-width: 520px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: 12px;
+  box-shadow: 0 20px 35px -10px rgb(0 0 0 / 0.25);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.export-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.export-dialog__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.export-dialog__close-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.export-dialog__close-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
+.export-dialog__content {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.export-dialog__section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.export-dialog__section-title {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.export-dialog__summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.export-dialog__summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+}
+
+.export-dialog__summary-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.export-dialog__summary-val {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.export-dialog__format-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.export-dialog__radio-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+.export-dialog__radio-option:hover {
+  border-color: var(--border-strong);
+}
+
+.export-dialog__radio-option--selected {
+  border-color: var(--brand-primary);
+  background: var(--bg-subtle);
+}
+
+.export-dialog__radio-option strong {
+  display: block;
+  font-size: 13px;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.export-dialog__radio-option p {
+  margin: 0;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.export-dialog__chip-group {
+  display: flex;
+  gap: 8px;
+}
+
+.export-dialog__chip {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+.export-dialog__chip:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-subtle);
+}
+
+.export-dialog__chip--active {
+  border-color: var(--brand-primary);
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .export-dialog__chip--active {
+  background: #1e3a8a;
+  color: #93c5fd;
+  border-color: #3b82f6;
+}
+
+.export-dialog__filename-preview {
+  display: inline-block;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--brand-primary);
+  font-family: monospace;
+}
+
+.export-dialog__error {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.export-dialog__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-subtle);
+}
+
 .search-modal-backdrop {
   position: fixed;
   inset: 0;

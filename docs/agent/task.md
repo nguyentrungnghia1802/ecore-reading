@@ -1037,20 +1037,22 @@ feat: persist viewer preferences and themes
 
 ### Checklist
 
-- [ ] Build export dialog showing current mode/filter/focus inclusion.
-- [ ] Add SVG download using P1-11 serializer.
-- [ ] Implement PNG by rasterizing canonical SVG output at high resolution rather than maintaining a second semantic renderer.
-- [ ] Support transparent/light/dark export background.
-- [ ] Sanitize filenames using source base name.
-- [ ] Ensure whole visible graph export is default and labels/markers are not clipped.
-- [ ] Add tests for filename, export options, and PNG dimensions.
-- [ ] Add E2E test verifying download is produced.
+- [x] Build export dialog showing current mode/filter/focus inclusion.
+- [x] Add SVG download using P1-11 serializer.
+- [x] Implement PNG by rasterizing canonical SVG output at high resolution rather than maintaining a second semantic renderer.
+- [x] Support transparent/light/dark export background.
+- [x] Sanitize filenames using source base name.
+- [x] Ensure whole visible graph export is default and labels/markers are not clipped.
+- [x] Add tests for filename, export options, and PNG dimensions.
+- [x] Add E2E test verifying download is produced.
 
 ### Acceptance
 
-- [ ] SVG and PNG visually represent same current semantic view.
-- [ ] PNG default is readable at 2×-class pixel density or equivalent documented scale.
-- [ ] No local absolute path/source content is embedded as hidden metadata.
+- [x] SVG and PNG visually represent same current semantic view.
+- [x] PNG default is readable at 2×-class pixel density or equivalent documented scale.
+- [x] No local absolute path/source content is embedded as hidden metadata.
+
+Completion note (2026-09-12): P2-10 SVG and PNG export workflow completed with ExportDialog modal displaying semantic view inclusion (detail mode, element counts, active filters, focus scope), transparent/light/dark background options, high-resolution PNG rasterization via the canonical SVG path (1x, 2x recommended, 3x), filename sanitization, unit tests (10 tests), and Playwright E2E suite (3 tests) passed.
 
 ### Commit
 

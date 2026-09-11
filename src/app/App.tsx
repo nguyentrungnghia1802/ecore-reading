@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import {
   DEFAULT_DIAGRAM_FILTER,
+  activeFilterCount,
   applyDiagramFilters,
   type DiagramFilterOptions,
 } from '../diagram/filter/diagram-filter';
@@ -18,6 +19,7 @@ import { buildSearchIndex, type SearchIndexItem } from '../search/search-index';
 import { DetailModeSelector } from './components/DetailModeSelector';
 import { EmptyState } from './components/EmptyState';
 import { ErrorState } from './components/ErrorState';
+import { ExportDialog } from './components/ExportDialog';
 import { FilterControls } from './components/FilterControls';
 import { FocusControls } from './components/FocusControls';
 import { Inspector } from './components/Inspector';
@@ -66,6 +68,7 @@ export function App() {
   const [isExplorerOpen, setIsExplorerOpen] = useState(true);
   const [isInspectorOpen, setIsInspectorOpen] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isExportOpen, setIsExportOpen] = useState(false);
 
   const searchIndexItems = useMemo(() => {
     return workspace.status === 'ready' ? buildSearchIndex(workspace.model) : [];
@@ -347,6 +350,9 @@ export function App() {
             onOpenSearch={() => {
               setIsSearchOpen(true);
             }}
+            onOpenExport={() => {
+              setIsExportOpen(true);
+            }}
           >
             <DetailModeSelector
               activeMode={workspace.options.detailMode}
@@ -458,6 +464,21 @@ export function App() {
             isOpen={isSearchOpen}
             onClose={() => setIsSearchOpen(false)}
             onSelect={handleSelectSearchResult}
+          />
+
+          <ExportDialog
+            isOpen={isExportOpen}
+            onClose={() => setIsExportOpen(false)}
+            sourceName={workspace.sourceName}
+            diagram={workspace.diagram}
+            layout={workspace.layout}
+            detailMode={workspace.options.detailMode}
+            focusDescription={
+              focusState
+                ? `Focused: ${workspace.model.classifierById.get(focusState.rootSemanticId)?.name ?? focusState.rootSemanticId} (depth ${focusState.depth})`
+                : null
+            }
+            activeFilterCount={activeFilterCount(filters)}
           />
         </div>
       )}
