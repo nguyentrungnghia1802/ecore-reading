@@ -40,6 +40,8 @@ export interface DiagramCanvasProps {
   onSelectionChange?: (selection: SemanticSelection | null) => void;
   className?: string;
   onResetLayout?: () => void;
+  minimapVisible?: boolean;
+  onToggleMinimap?: (visible: boolean) => void;
 }
 
 function DiagramCanvasInner({
@@ -48,12 +50,22 @@ function DiagramCanvasInner({
   onSelectionChange,
   className,
   onResetLayout,
+  minimapVisible,
+  onToggleMinimap,
 }: DiagramCanvasProps) {
   const { fitView, setCenter, getZoom } = useReactFlow();
   const [localSelection, setLocalSelection] = useState<SemanticSelection | null>(null);
   const [isLowZoom, setIsLowZoom] = useState(false);
-  const [showMiniMap, setShowMiniMap] = useState(true);
+  const [localMiniMap, setLocalMiniMap] = useState(true);
+  const showMiniMap = minimapVisible ?? localMiniMap;
   const [manualOverrides, setManualOverrides] = useState<Record<string, { x: number; y: number }>>({});
+
+  const handleToggleMiniMap = useCallback(() => {
+    if (minimapVisible === undefined) {
+      setLocalMiniMap((prev) => !prev);
+    }
+    onToggleMinimap?.(!showMiniMap);
+  }, [minimapVisible, onToggleMinimap, showMiniMap]);
 
   const activeSelection = selection === undefined ? localSelection : selection;
   const publishSelection = useCallback(
@@ -259,7 +271,7 @@ function DiagramCanvasInner({
           <ControlButton
             aria-label="Toggle Minimap"
             data-testid="toggle-minimap-btn"
-            onClick={() => setShowMiniMap((open) => !open)}
+            onClick={handleToggleMiniMap}
             title="Toggle Minimap"
           >
             <svg

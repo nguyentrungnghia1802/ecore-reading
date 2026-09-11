@@ -24,8 +24,16 @@ import { Inspector } from './components/Inspector';
 import { LoadingState } from './components/LoadingState';
 import { ModelExplorer } from './components/ModelExplorer';
 import { SearchDialog } from './components/SearchDialog';
+import { ThemeSelector } from './components/ThemeSelector';
 import { WorkspaceHeader } from './components/WorkspaceHeader';
 import { WorkspaceStatusBar } from './components/WorkspaceStatusBar';
+import {
+  loadPreferences,
+  resolveEffectiveTheme,
+  savePreferences,
+  type PreferencesV1,
+  type ThemeMode,
+} from './state/preferences';
 import {
   createEmptyWorkspace,
   loadEcoreDocument,
@@ -33,10 +41,27 @@ import {
 import type { WorkspaceState } from './state/workspace-types';
 
 export function App() {
+  const [preferences, setPreferences] = useState<PreferencesV1>(() => loadPreferences());
+  const effectiveTheme = resolveEffectiveTheme(preferences.theme);
+
+  useEffect(() => {
+    savePreferences(preferences);
+  }, [preferences]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', effectiveTheme);
+  }, [effectiveTheme]);
+
   const [workspace, setWorkspace] = useState<WorkspaceState>(createEmptyWorkspace);
   const [selection, setSelection] = useState<SemanticSelection | null>(null);
   const [focusState, setFocusState] = useState<{ rootSemanticId: string; depth: FocusDepth } | null>(null);
-  const [filters, setFilters] = useState<DiagramFilterOptions>(DEFAULT_DIAGRAM_FILTER);
+  const [filters, setFilters] = useState<DiagramFilterOptions>(() => ({
+    ...DEFAULT_DIAGRAM_FILTER,
+    relations: {
+      ...DEFAULT_DIAGRAM_FILTER.relations,
+      ...loadPreferences().relationVisibility,
+    },
+  }));
   const [filterNotice, setFilterNotice] = useState<string | null>(null);
   const [isExplorerOpen, setIsExplorerOpen] = useState(true);
   const [isInspectorOpen, setIsInspectorOpen] = useState(true);
@@ -60,7 +85,9 @@ export function App() {
 
     try {
       const text = await file.text();
-      const result = await loadEcoreDocument(text, file.name);
+      const result = await loadEcoreDocument(text, file.name, {
+        diagramOptions: { detailMode: preferences.detailMode },
+      });
       setWorkspace(result);
     } catch (err: unknown) {
       setWorkspace({
@@ -72,7 +99,7 @@ export function App() {
         selection: null,
       });
     }
-  }, []);
+  }, [preferences.detailMode]);
 
   const handleLoadSample = useCallback(async (fixtureName: string) => {
     setWorkspace({
@@ -92,7 +119,9 @@ export function App() {
         throw new Error(`Failed to load fixture "${fixtureName}": HTTP ${response.status}`);
       }
       const text = await response.text();
-      const result = await loadEcoreDocument(text, fixtureName);
+      const result = await loadEcoreDocument(text, fixtureName, {
+        diagramOptions: { detailMode: preferences.detailMode },
+      });
       setWorkspace(result);
     } catch (err: unknown) {
       setWorkspace({
@@ -104,7 +133,7 @@ export function App() {
         selection: null,
       });
     }
-  }, []);
+  }, [preferences.detailMode]);
 
   const handleReset = useCallback(() => {
     setWorkspace(createEmptyWorkspace());
@@ -208,9 +237,14 @@ export function App() {
     await relayoutDiagram(workspace.options, null, filters);
   }, [workspace, filters, relayoutDiagram]);
 
+  const handleThemeChange = useCallback((theme: ThemeMode) => {
+    setPreferences((prev) => ({ ...prev, theme }));
+  }, []);
+
   const handleModeChange = useCallback(
     async (newMode: DiagramDetailMode) => {
       if (workspace.status !== 'ready' || workspace.options.detailMode === newMode) return;
+      setPreferences((prev) => ({ ...prev, detailMode: newMode }));
       const newOptions = { ...workspace.options, detailMode: newMode };
       await relayoutDiagram(newOptions, focusState, filters);
     },
@@ -221,6 +255,10 @@ export function App() {
     async (newFilters: DiagramFilterOptions) => {
       if (workspace.status !== 'ready') return;
       setFilters(newFilters);
+      setPreferences((prev) => ({
+        ...prev,
+        relationVisibility: { ...newFilters.relations },
+      }));
 
       // Check if current selection would be filtered out
       if (selection) {
@@ -272,7 +310,7 @@ export function App() {
   }, [workspace, focusState, relayoutDiagram]);
 
   return (
-    <div className="workspace-app" data-testid="workspace-app">
+    <div className="workspace-app" data-testid="workspace-app" data-theme={effectiveTheme}>
       {workspace.status === 'empty' && (
         <EmptyState
           onOpenFile={(file) => {
@@ -346,6 +384,10 @@ export function App() {
                 void handleResetFilters();
               }}
             />
+            <ThemeSelector
+              theme={preferences.theme}
+              onChangeTheme={handleThemeChange}
+            />
           </WorkspaceHeader>
 
           {filterNotice && (
@@ -385,6 +427,10 @@ export function App() {
                 layout={workspace.layout}
                 selection={selection}
                 onSelectionChange={setSelection}
+                minimapVisible={preferences.minimapVisible}
+                onToggleMinimap={(visible) => {
+                  setPreferences((prev) => ({ ...prev, minimapVisible: visible }));
+                }}
               />
             </div>
 

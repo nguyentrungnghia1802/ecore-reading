@@ -1002,20 +1002,22 @@ feat: polish diagram viewport controls
 
 ### Checklist
 
-- [ ] Define centralized CSS/theme variables for canvas, nodes, edges, selection, diagnostics, panels.
-- [ ] Support system/light/dark.
-- [ ] Add versioned preferences schema `ecore-visualizer.preferences.v1` or documented equivalent.
-- [ ] Persist theme, detail mode, layout profile, relation defaults, minimap preference.
-- [ ] Do not persist source model content, classifier names, annotations, or search history.
-- [ ] Parse corrupted local storage defensively and fall back to defaults.
-- [ ] Add unit tests for preference parse/migration/fallback.
-- [ ] Add light/dark visual regression snapshots.
+- [x] Define centralized CSS/theme variables for canvas, nodes, edges, selection, diagnostics, panels.
+- [x] Support system/light/dark.
+- [x] Add versioned preferences schema `ecore-visualizer.preferences.v1` or documented equivalent.
+- [x] Persist theme, detail mode, layout profile, relation defaults, minimap preference.
+- [x] Do not persist source model content, classifier names, annotations, or search history.
+- [x] Parse corrupted local storage defensively and fall back to defaults.
+- [x] Add unit tests for preference parse/migration/fallback.
+- [x] Add light/dark visual regression snapshots.
 
 ### Acceptance
 
-- [ ] Theme works without semantic color dependence.
-- [ ] Corrupt preference data cannot prevent startup.
-- [ ] Browser storage inspection confirms no source model content is written.
+- [x] Theme works without semantic color dependence.
+- [x] Corrupt preference data cannot prevent startup.
+- [x] Browser storage inspection confirms no source model content is written.
+
+Completion note (2026-09-12): P2-09 theme system and versioned preference persistence completed with centralized CSS variables for Light, Dark, and System themes, versioned schema `ecore-visualizer.preferences.v1`, defensive fallback on malformed/corrupted data, strict whitelisting preventing any model or search text storage, ThemeSelector in header, unit tests (7 tests), and Playwright E2E suite (3 tests) passed.
 
 ### Commit
 

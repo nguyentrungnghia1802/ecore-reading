@@ -32,7 +32,7 @@ main:not(.workspace-main) {
 }
 
 .diagram-canvas .react-flow {
-  background: #f8fafc;
+  background: var(--canvas-bg, #f8fafc);
 }
 
 .diagram-canvas .react-flow__node {
@@ -41,12 +41,12 @@ main:not(.workspace-main) {
 }
 
 .uml-node {
-  background: #fff;
-  border: 1.5px solid #334155;
+  background: var(--node-bg, #fff);
+  border: 1.5px solid var(--node-border, #334155);
   border-radius: 7px;
-  box-shadow: 0 2px 5px rgb(15 23 42 / 12%);
+  box-shadow: var(--node-shadow, 0 2px 5px rgb(15 23 42 / 12%));
   box-sizing: border-box;
-  color: #172033;
+  color: var(--node-text, #172033);
   display: block;
   overflow: hidden;
   transition: opacity 120ms ease, outline-width 120ms ease, transform 120ms ease;
@@ -62,17 +62,18 @@ main:not(.workspace-main) {
 
 .uml-node--external {
   border-style: dashed;
-  color: #475569;
+  color: var(--text-muted, #475569);
 }
 
 .uml-node--selected {
-  outline: 4px double #111827;
+  outline: 4px double var(--selection-outline, #111827);
   outline-offset: 3px;
   transform: translateY(-1px);
 }
 
 .uml-node--neighbor {
   border-width: 3px;
+  border-color: var(--selection-neighbor-border, #2563eb);
 }
 
 .uml-node--dimmed {
@@ -250,7 +251,8 @@ main:not(.workspace-main) {
    Workspace Shell Styles
    ========================================================================== */
 
-:root {
+:root,
+[data-theme="light"] {
   --bg-app: #f8fafc;
   --bg-surface: #ffffff;
   --bg-surface-elevated: #ffffff;
@@ -267,6 +269,85 @@ main:not(.workspace-main) {
   --color-warning: #d97706;
   --color-error: #dc2626;
   --color-success: #16a34a;
+
+  /* Diagram canvas, nodes, edges & selection */
+  --canvas-bg: #f8fafc;
+  --node-bg: #ffffff;
+  --node-border: #334155;
+  --node-text: #172033;
+  --node-header-border: #64748b;
+  --node-row-hover: #f1f5f9;
+  --node-shadow: 0 2px 5px rgb(15 23 42 / 12%);
+  --selection-outline: #111827;
+  --selection-neighbor-border: #2563eb;
+  --edge-color: #334155;
+  --edge-label-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+  --bg-app: #090d16;
+  --bg-surface: #131b2e;
+  --bg-surface-elevated: #1e293b;
+  --bg-subtle: #1e293b;
+  --border-subtle: #243048;
+  --border-medium: #334155;
+  --border-strong: #475569;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --brand-primary: #3b82f6;
+  --brand-primary-hover: #60a5fa;
+  --brand-accent: #60a5fa;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-success: #22c55e;
+
+  /* Diagram canvas, nodes, edges & selection */
+  --canvas-bg: #0b1120;
+  --node-bg: #151e33;
+  --node-border: #334155;
+  --node-text: #f8fafc;
+  --node-header-border: #334155;
+  --node-row-hover: #1e293b;
+  --node-shadow: 0 4px 10px rgb(0 0 0 / 40%);
+  --selection-outline: #60a5fa;
+  --selection-neighbor-border: #3b82f6;
+  --edge-color: #94a3b8;
+  --edge-label-bg: #151e33;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-app: #090d16;
+    --bg-surface: #131b2e;
+    --bg-surface-elevated: #1e293b;
+    --bg-subtle: #1e293b;
+    --border-subtle: #243048;
+    --border-medium: #334155;
+    --border-strong: #475569;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --brand-primary: #3b82f6;
+    --brand-primary-hover: #60a5fa;
+    --brand-accent: #60a5fa;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+    --color-success: #22c55e;
+
+    /* Diagram canvas, nodes, edges & selection */
+    --canvas-bg: #0b1120;
+    --node-bg: #151e33;
+    --node-border: #334155;
+    --node-text: #f8fafc;
+    --node-header-border: #334155;
+    --node-row-hover: #1e293b;
+    --node-shadow: 0 4px 10px rgb(0 0 0 / 40%);
+    --selection-outline: #60a5fa;
+    --selection-neighbor-border: #3b82f6;
+    --edge-color: #94a3b8;
+    --edge-label-bg: #151e33;
+  }
 }
 
 .visually-hidden {
@@ -430,6 +511,45 @@ main:not(.workspace-main) {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+/* ==========================================================================
+   Theme Selector Component
+   ========================================================================== */
+.theme-selector {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.theme-selector__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 120ms ease;
+  padding: 0;
+}
+
+.theme-selector__btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface);
+}
+
+.theme-selector__btn--active {
+  background: var(--bg-surface);
+  color: var(--brand-primary);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
 }
 
 /* ==========================================================================
