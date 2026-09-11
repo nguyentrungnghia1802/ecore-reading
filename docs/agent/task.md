@@ -508,27 +508,29 @@ Turn a sized semantic graph into a reliable LayoutModel without blocking UI or l
 
 ### Checklist
 
-- [ ] Create project-owned ELK adapter; application code outside layout layer must not depend on raw ELK JSON shape.
-- [ ] Implement `hierarchy-down`, `hierarchy-right`, and `compact` layout profiles.
-- [ ] Default to layered layout and orthogonal routing for hierarchy profiles.
-- [ ] Convert all nodes with deterministic width/height and stable IDs.
-- [ ] Preserve each relation as a unique ELK edge even for same source/target pair.
-- [ ] Support self-reference routing and multiple edges.
-- [ ] Convert ELK sections/bend points to LayoutRelation sections.
-- [ ] Validate finite node coordinates, positive sizes, finite route points, and endpoint identity.
-- [ ] Implement worker request/response types with `requestId`.
-- [ ] Implement main-thread coordinator that ignores stale responses.
-- [ ] Add failure path returning a recoverable layout error without destroying semantic data.
-- [ ] Add integration tests on dense, multiple-inheritance, containment, parallel-edge, and self-reference graphs.
-- [ ] Add deterministic normalized-layout regression fixtures where stable enough.
+- [x] Create project-owned ELK adapter; application code outside layout layer must not depend on raw ELK JSON shape.
+- [x] Implement `hierarchy-down`, `hierarchy-right`, and `compact` layout profiles.
+- [x] Default to layered layout and orthogonal routing for hierarchy profiles.
+- [x] Convert all nodes with deterministic width/height and stable IDs.
+- [x] Preserve each relation as a unique ELK edge even for same source/target pair.
+- [x] Support self-reference routing and multiple edges.
+- [x] Convert ELK sections/bend points to LayoutRelation sections.
+- [x] Validate finite node coordinates, positive sizes, finite route points, and endpoint identity.
+- [x] Implement worker request/response types with `requestId`.
+- [x] Implement main-thread coordinator that ignores stale responses.
+- [x] Add failure path returning a recoverable layout error without destroying semantic data.
+- [x] Add integration tests on dense, multiple-inheritance, containment, parallel-edge, and self-reference graphs.
+- [x] Add deterministic normalized-layout regression fixtures where stable enough.
 
 ### Acceptance
 
-- [ ] Layout work for medium fixtures can execute in worker mode.
-- [ ] Stale layout result test proves older request cannot overwrite newer request.
-- [ ] Every input relation ID survives layout.
-- [ ] No NaN/Infinity geometry in test corpus.
-- [ ] Full typecheck/lint/unit/integration suite passes.
+- [x] Layout work for medium fixtures can execute in worker mode.
+- [x] Stale layout result test proves older request cannot overwrite newer request.
+- [x] Every input relation ID survives layout.
+- [x] No NaN/Infinity geometry in test corpus.
+- [x] Full typecheck/lint/unit/integration suite passes.
+
+Completion note (2026-09-11): ELK/worker suite (11 tests), full unit/integration suite (116 tests), typecheck, lint, and production build passed.
 
 ### Commit
 
