@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="opposites">
+  <eClassifiers xsi:type="ecore:EClass" name="Parent"><eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1" eType="#//Child" eOpposite="#//Child/parent"/></eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Child"><eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//Parent" eOpposite="#//Parent/children"/></eClassifiers>
+</ecore:EPackage>

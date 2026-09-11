@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="generics">
+  <eClassifiers xsi:type="ecore:EClass" name="Box"><eTypeParameters name="T"/><eStructuralFeatures xsi:type="ecore:EAttribute" name="value"><eGenericType eTypeParameter="#//Box/T"/></eStructuralFeatures><eOperations name="map"><eTypeParameters name="R"/><eGenericType eTypeParameter="#//Box/map/R"/></eOperations></eClassifiers>
+</ecore:EPackage>

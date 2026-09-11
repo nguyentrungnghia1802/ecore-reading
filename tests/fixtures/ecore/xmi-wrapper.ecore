@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:e="http://www.eclipse.org/emf/2002/Ecore">
+  <e:EPackage name="wrapped" nsURI="urn:wrapped" nsPrefix="wrapped"><eClassifiers xsi:type="e:EClass" name="Wrapped"/></e:EPackage>
+</xmi:XMI>
