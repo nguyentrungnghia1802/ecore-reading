@@ -208,26 +208,28 @@ src/ecore/resolver/*.test.ts
 
 ### Checklist
 
-- [ ] Write table-driven failing tests for `#//Agent`, `#//Agent/beliefs`, positional `#/0/Member`, positional feature fragments, builtin Ecore URI, and arbitrary external URI.
-- [ ] Implement `ParsedEcoreUriRef` normalization retaining the exact raw input.
-- [ ] Handle serialized type strings that contain a kind hint plus URI, e.g. `ecore:EDataType <uri>#//EString`.
-- [ ] Build local indexes by package/classifier/feature structural paths.
-- [ ] Resolve name-based local fragments.
-- [ ] Resolve positional XMI fragments against original structural order; do not reinterpret positions after filtering.
-- [ ] Implement a central registry covering standard Ecore builtin datatypes rather than only EString/EInt.
-- [ ] Distinguish `{kind:'local'}`, `{kind:'builtin'}`, and `{kind:'external', resolution:'unresolved'}`.
-- [ ] Never perform network fetches.
-- [ ] Emit stable diagnostics for unresolved local and external references with raw reference attached.
-- [ ] Add ambiguity tests for malformed duplicate names.
-- [ ] Add tests demonstrating that same-named classifiers in different packages resolve distinctly.
+- [x] Write table-driven failing tests for `#//Agent`, `#//Agent/beliefs`, positional `#/0/Member`, positional feature fragments, builtin Ecore URI, and arbitrary external URI.
+- [x] Implement `ParsedEcoreUriRef` normalization retaining the exact raw input.
+- [x] Handle serialized type strings that contain a kind hint plus URI, e.g. `ecore:EDataType <uri>#//EString`.
+- [x] Build local indexes by package/classifier/feature structural paths.
+- [x] Resolve name-based local fragments.
+- [x] Resolve positional XMI fragments against original structural order; do not reinterpret positions after filtering.
+- [x] Implement a central registry covering standard Ecore builtin datatypes rather than only EString/EInt.
+- [x] Distinguish `{kind:'local'}`, `{kind:'builtin'}`, and `{kind:'external', resolution:'unresolved'}`.
+- [x] Never perform network fetches.
+- [x] Emit stable diagnostics for unresolved local and external references with raw reference attached.
+- [x] Add ambiguity tests for malformed duplicate names.
+- [x] Add tests demonstrating that same-named classifiers in different packages resolve distinctly.
 
 ### Acceptance
 
-- [ ] Resolver output is deterministic.
-- [ ] All URI normalization fixtures pass.
-- [ ] Builtin datatypes do not become unresolved external nodes.
-- [ ] Unknown external types remain explicit and do not crash later mapping.
-- [ ] Full typecheck/lint/unit suite passes.
+- [x] Resolver output is deterministic.
+- [x] All URI normalization fixtures pass.
+- [x] Builtin datatypes do not become unresolved external nodes.
+- [x] Unknown external types remain explicit and do not crash later mapping.
+- [x] Full typecheck/lint/unit suite passes.
+
+Completion note (2026-09-11): resolver suite (25 tests), full unit suite (60 tests), typecheck, and lint passed. Builtin names were cross-checked against Eclipse EMF EcorePackage documentation.
 
 ### Commit
 
