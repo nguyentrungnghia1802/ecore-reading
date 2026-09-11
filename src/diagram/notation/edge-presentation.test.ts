@@ -116,4 +116,19 @@ describe('semantic edge presentation', () => {
     expect(first[0]?.text).toBe('first 0..1');
     expect(second[0]?.text).toBe('second 0..1');
   });
+
+  it('truncates long edge roles while preserving the higher-priority multiplicity', () => {
+    const roleName = 'W'.repeat(120);
+    const labels = edgeEndLabels(relation({
+      targetEnd: {
+        classifierId: 'class:B',
+        roleName,
+        multiplicity: { lower: 0, upper: 'unbounded' },
+        navigable: true,
+      },
+    }));
+
+    expect(labels[0]?.text.length).toBeLessThanOrEqual(36);
+    expect(labels[0]?.text).toMatch(/… 0\.\.\*$/);
+  });
 });

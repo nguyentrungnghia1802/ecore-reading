@@ -615,26 +615,26 @@ serializeSvg(
 
 ### Checklist
 
-- [ ] Write tests for XML/SVG escaping of model-controlled names, annotation text, ampersands, angle brackets, and quotes.
-- [ ] Create standalone `<svg>` with deterministic `viewBox` covering whole graph plus padding.
-- [ ] Serialize node shapes, headers, compartments, row text, stereotypes, and diagnostics markers needed by current view.
-- [ ] Serialize routed edge sections from LayoutModel.
-- [ ] Define reusable SVG markers for reference arrows/generalization and explicit composition diamond geometry.
-- [ ] Place role/multiplicity labels from DiagramRelation semantic ends.
-- [ ] Use actual SVG text with documented system font stack.
-- [ ] Exclude scripts, event handlers, remote resources, and raw unescaped markup.
-- [ ] Support transparent/light/dark background option.
-- [ ] Add XML parse-back test proving produced SVG is well-formed.
-- [ ] Add semantic snapshot tests that inspect marker/diamond direction rather than only a large opaque string snapshot.
-- [ ] Compare representative SVG output visually against canvas notation.
+- [x] Write tests for XML/SVG escaping of model-controlled names, annotation text, ampersands, angle brackets, and quotes.
+- [x] Create standalone `<svg>` with deterministic `viewBox` covering whole graph plus padding.
+- [x] Serialize node shapes, headers, compartments, row text, stereotypes, and diagnostics markers needed by current view.
+- [x] Serialize routed edge sections from LayoutModel.
+- [x] Define reusable SVG markers for reference arrows/generalization and explicit composition diamond geometry.
+- [x] Place role/multiplicity labels from DiagramRelation semantic ends.
+- [x] Use actual SVG text with documented system font stack.
+- [x] Exclude scripts, event handlers, remote resources, and raw unescaped markup.
+- [x] Support transparent/light/dark background option.
+- [x] Add XML parse-back test proving produced SVG is well-formed.
+- [x] Add semantic snapshot tests that inspect marker/diamond direction rather than only a large opaque string snapshot.
+- [x] Compare representative SVG output visually against canvas notation.
 
 ### Acceptance
 
-- [ ] SVG remains vector when zoomed.
-- [ ] No `foreignObject` is required for canonical export.
-- [ ] Malicious-looking model text is escaped and non-executable.
-- [ ] Whole diagram is inside viewBox with no clipped markers/labels in fixtures.
-- [ ] Unit + export integration tests pass.
+- [x] SVG remains vector when zoomed.
+- [x] No `foreignObject` is required for canonical export.
+- [x] Malicious-looking model text is escaped and non-executable.
+- [x] Whole diagram is inside viewBox with no clipped markers/labels in fixtures.
+- [x] Unit + export integration tests pass.
 
 ### Commit
 

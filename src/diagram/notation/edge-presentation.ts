@@ -1,5 +1,9 @@
 import type { AssociationEnd } from '../model';
+import { layoutText } from '../sizing';
 import type { LayoutRelation, LayoutSection, Point } from '../../layout/model';
+
+export const EDGE_LABEL_MAX_CHARACTERS = 36;
+export const EDGE_LABEL_FONT_SIZE = 11;
 
 export type EdgeMarker =
   | 'uml-hollow-triangle'
@@ -22,6 +26,8 @@ export interface EdgeEndLabel {
   end: 'source' | 'target';
   point: Point;
   text: string;
+  fullText: string;
+  truncated: boolean;
 }
 
 function pointCommand(command: 'M' | 'L', point: Point): string {
@@ -140,6 +146,33 @@ export function formatAssociationEnd(end: AssociationEnd | undefined): string | 
   return parts.length === 0 ? undefined : parts.join(' ');
 }
 
+function layoutAssociationEnd(end: AssociationEnd | undefined): {
+  text: string;
+  fullText: string;
+  truncated: boolean;
+} | undefined {
+  const fullText = formatAssociationEnd(end);
+  if (fullText === undefined) return undefined;
+  if (fullText.length <= EDGE_LABEL_MAX_CHARACTERS) {
+    return { text: fullText, fullText, truncated: false };
+  }
+
+  const multiplicity = formatMultiplicity(end);
+  const suffix = multiplicity === undefined ? '' : ` ${multiplicity}`;
+  const roleName = end?.roleName;
+  if (roleName === undefined || roleName.length === 0) {
+    const laidOut = layoutText(fullText, EDGE_LABEL_MAX_CHARACTERS);
+    return { text: laidOut.displayText, fullText, truncated: laidOut.truncated };
+  }
+  const roleBudget = Math.max(1, EDGE_LABEL_MAX_CHARACTERS - suffix.length);
+  const laidOutRole = layoutText(roleName, roleBudget);
+  return {
+    text: `${laidOutRole.displayText}${suffix}`,
+    fullText,
+    truncated: laidOutRole.truncated,
+  };
+}
+
 export function edgeAccessibleLabel(relation: Pick<LayoutRelation, 'kind' | 'sourceEnd' | 'targetEnd'>): string {
   const endLabels = [
     formatAssociationEnd(relation.sourceEnd),
@@ -187,16 +220,16 @@ function labelPoint(
 export function edgeEndLabels(relation: LayoutRelation): EdgeEndLabel[] {
   const source = firstRoutePoint(relation.sections);
   const target = lastRoutePoint(relation.sections);
-  const sourceText = formatAssociationEnd(relation.sourceEnd);
-  const targetText = formatAssociationEnd(relation.targetEnd);
+  const sourceText = layoutAssociationEnd(relation.sourceEnd);
+  const targetText = layoutAssociationEnd(relation.targetEnd);
   const lane = stableLabelLane(relation.id);
   return [
     ...(source === null || sourceText === undefined
       ? []
-      : [{ end: 'source' as const, point: labelPoint(source, lane), text: sourceText }]),
+      : [{ end: 'source' as const, point: labelPoint(source, lane), ...sourceText }]),
     ...(target === null || targetText === undefined
       ? []
-      : [{ end: 'target' as const, point: labelPoint(target, lane), text: targetText }]),
+      : [{ end: 'target' as const, point: labelPoint(target, lane), ...targetText }]),
   ];
 }
 

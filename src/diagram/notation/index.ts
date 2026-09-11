@@ -1,4 +1,6 @@
 export {
+  EDGE_LABEL_FONT_SIZE,
+  EDGE_LABEL_MAX_CHARACTERS,
   edgeAccessibleLabel,
   edgeEndLabels,
   edgeMarkerShapes,

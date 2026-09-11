@@ -44,6 +44,7 @@ export function SemanticEdge({ data, style }: EdgeProps<SemanticFlowEdge>) {
           x={label.point.x}
           y={label.point.y}
         >
+          {label.truncated ? <title>{label.fullText}</title> : null}
           {label.text}
         </text>
       ))}
