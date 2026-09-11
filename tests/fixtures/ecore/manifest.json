@@ -3,6 +3,7 @@
   "all-features.ecore": "EClass with representative attributes, references, operations, parameters and annotations.",
   "inheritance-multiple.ecore": "EClass with two local supertypes.",
   "opposite-valid.ecore": "Symmetric eOpposite pair.",
+  "opposite-invalid.ecore": "Asymmetric eOpposite declaration that must remain unpaired.",
   "containment.ecore": "Containment with inverse container reference.",
   "self-reference.ecore": "Self reference and self containment.",
   "nested-packages.ecore": "Nested EPackages with same-named classifiers.",

@@ -306,28 +306,30 @@ Make relation semantics trustworthy enough that the viewer never shows a mislead
 
 ### Checklist
 
-- [ ] Add fixtures/tests for a valid symmetric opposite pair.
-- [ ] Add test where only one side declares `eOpposite`; treat it as malformed, emit `ECORE_INVALID_OPPOSITE`, and do not merge the two references.
-- [ ] Add test for inconsistent reverse `eOpposite`.
-- [ ] Add test for opposite path resolving to a non-EReference.
-- [ ] Add test for containment reference paired with inverse container navigation.
-- [ ] Add test for two unrelated parallel references between the same EClasses.
-- [ ] Add self-containment/self-reference test.
-- [ ] Resolve `oppositeReferenceId` only after all references exist.
-- [ ] Validate endpoint compatibility before marking a pair as mergeable.
-- [ ] Keep raw EReference instances separate in EcoreModel even when a later UML view can merge them.
-- [ ] Emit `ECORE_INVALID_OPPOSITE` for inconsistent pairing.
-- [ ] Define a pure helper returning a validated opposite-pair descriptor used by DiagramMapper.
-- [ ] Ensure inverse container navigation cannot result in two overlapping composition relations in default mapping.
+- [x] Add fixtures/tests for a valid symmetric opposite pair.
+- [x] Add test where only one side declares `eOpposite`; treat it as malformed, emit `ECORE_INVALID_OPPOSITE`, and do not merge the two references.
+- [x] Add test for inconsistent reverse `eOpposite`.
+- [x] Add test for opposite path resolving to a non-EReference.
+- [x] Add test for containment reference paired with inverse container navigation.
+- [x] Add test for two unrelated parallel references between the same EClasses.
+- [x] Add self-containment/self-reference test.
+- [x] Resolve `oppositeReferenceId` only after all references exist.
+- [x] Validate endpoint compatibility before marking a pair as mergeable.
+- [x] Keep raw EReference instances separate in EcoreModel even when a later UML view can merge them.
+- [x] Emit `ECORE_INVALID_OPPOSITE` for inconsistent pairing.
+- [x] Define a pure helper returning a validated opposite-pair descriptor used by DiagramMapper.
+- [x] Ensure inverse container navigation cannot result in two overlapping composition relations in default mapping.
 
 ### Acceptance
 
-- [ ] Valid pairs are recognized deterministically.
-- [ ] Invalid pairs remain separate and carry diagnostics.
-- [ ] Parallel non-opposite references remain distinct.
-- [ ] Containment ownership direction is correct.
-- [ ] No semantic information is discarded during pairing.
-- [ ] Full typecheck/lint/unit suite passes.
+- [x] Valid pairs are recognized deterministically.
+- [x] Invalid pairs remain separate and carry diagnostics.
+- [x] Parallel non-opposite references remain distinct.
+- [x] Containment ownership direction is correct.
+- [x] No semantic information is discarded during pairing.
+- [x] Full typecheck/lint/unit suite passes.
+
+Completion note (2026-09-11): eOpposite suite (7 tests), full unit suite (77 tests), typecheck, and lint passed.
 
 ### Commit
 

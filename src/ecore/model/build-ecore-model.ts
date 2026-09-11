@@ -11,6 +11,7 @@ import type {
 } from '../raw';
 import { buildLocalEcoreIndex, resolveClassifierRef, type LocalEcoreIndex } from '../resolver';
 import { addInheritanceCycleDiagnostics } from '../validation/inheritance-cycles';
+import { resolveAndValidateOpposites } from '../validation/opposites';
 import type { Diagnostic } from './diagnostic';
 import {
   classifierId,
@@ -349,6 +350,7 @@ export function buildEcoreModel(document: RawEcoreDocument): EcoreModel {
     diagnostics: [...document.diagnostics],
   };
   document.packages.forEach((pkg) => semanticPackage(pkg, [], undefined, state));
+  state.features = resolveAndValidateOpposites(state.features, state.index, state.diagnostics);
   addInheritanceCycleDiagnostics(state.classifiers, state.diagnostics);
 
   const parameters = state.operations.flatMap((item) => item.parameters);
