@@ -5,9 +5,9 @@ import type {
   SizedDiagram,
   SizedDiagramNode,
   SizedDiagramRelation,
-  SizedRowText,
   TextLayout,
 } from './types';
+import type { SizedRowText } from './types';
 
 export const DEFAULT_DIAGRAM_METRICS: DiagramMetrics = Object.freeze({
   minWidth: 220,

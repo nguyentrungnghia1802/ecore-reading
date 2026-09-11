@@ -93,6 +93,24 @@ describe('ELK layout adapter', () => {
     );
   });
 
+  it('preserves the deterministic text contract from sizing into LayoutModel', async () => {
+    const longTitle = 'A'.repeat(200);
+    const input = sizeDiagram({
+      nodes: [{
+        id: 'node:Long', semanticId: 'Long', kind: 'class', title: longTitle,
+        rows: [], badges: [],
+      }],
+      relations: [],
+      sourceSemanticIds: new Set(['Long']),
+      diagnostics: [],
+    });
+
+    const output = await layoutSizedDiagram(input, getLayoutProfile('compact'));
+
+    expect(output.nodes[0]?.text.title).toEqual(input.nodes[0]?.text.title);
+    expect(output.nodes[0]?.text.title.displayText).not.toBe(longTitle);
+  });
+
   it('rejects non-finite geometry returned by the layout engine', async () => {
     const input = sizeDiagram({
       nodes: [node('node:Broken')],

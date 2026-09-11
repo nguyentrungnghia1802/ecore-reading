@@ -1,4 +1,8 @@
-import type { DiagramNode, DiagramRelation } from '../../diagram/model';
+import type {
+  DiagramNode,
+  DiagramRelation,
+  NodeTextLayout,
+} from '../../diagram/model';
 
 export interface Point {
   x: number;
@@ -19,6 +23,7 @@ export interface LayoutSection {
 export interface LayoutNode extends DiagramNode {
   position: Point;
   size: Size;
+  text: NodeTextLayout;
 }
 
 export interface LayoutRelation extends DiagramRelation {

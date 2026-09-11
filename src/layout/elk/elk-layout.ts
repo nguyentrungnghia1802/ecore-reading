@@ -73,6 +73,17 @@ function convertLayout(
       ...(sized.stereotype === undefined ? {} : { stereotype: sized.stereotype }),
       rows: sized.rows,
       badges: sized.badges,
+      text: {
+        title: { ...sized.text.title },
+        ...(sized.text.stereotype === undefined
+          ? {}
+          : { stereotype: { ...sized.text.stereotype } }),
+        rows: sized.text.rows.map((row) => ({
+          rowId: row.rowId,
+          primary: { ...row.primary },
+          ...(row.secondary === undefined ? {} : { secondary: { ...row.secondary } }),
+        })),
+      },
       position: { x: valueOrDefault(elkNode?.x), y: valueOrDefault(elkNode?.y) },
       size: {
         width: valueOrDefault(elkNode?.width, sized.size.width),

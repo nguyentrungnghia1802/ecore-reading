@@ -1,5 +1,9 @@
 import type { Diagnostic } from '../../ecore/model';
-import type { DiagramNode, DiagramRelation } from '../model';
+import type {
+  DiagramNode,
+  DiagramRelation,
+  NodeTextLayout,
+} from '../model';
 import type { Size } from '../../layout/model';
 
 export type LayoutPortSide = 'top' | 'right' | 'bottom' | 'left';
@@ -15,23 +19,11 @@ export interface DiagramMetrics {
   approximateCharacterWidth: number;
 }
 
-export interface TextLayout {
-  fullText: string;
-  displayText: string;
-  truncated: boolean;
-}
-
-export interface SizedRowText {
-  rowId: string;
-  primary: TextLayout;
-  secondary?: TextLayout;
-}
-
-export interface SizedNodeText {
-  title: TextLayout;
-  stereotype?: TextLayout;
-  rows: SizedRowText[];
-}
+export type {
+  NodeTextLayout as SizedNodeText,
+  RowTextLayout as SizedRowText,
+  TextLayout,
+} from '../model';
 
 export interface LayoutPort {
   id: string;
@@ -42,7 +34,7 @@ export interface LayoutPort {
 export interface SizedDiagramNode extends DiagramNode {
   size: Size;
   ports: LayoutPort[];
-  text: SizedNodeText;
+  text: NodeTextLayout;
 }
 
 export interface SizedDiagramRelation extends DiagramRelation {

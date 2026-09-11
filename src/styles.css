@@ -1,7 +1,14 @@
 :root {
-  color: #e8edf4;
-  background: #111827;
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  color: #172033;
+  background: #f4f7fb;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
 }
 
 body {
@@ -12,4 +19,229 @@ main {
   margin: 4rem auto;
   max-width: 48rem;
   padding: 0 2rem;
+}
+
+.diagram-canvas {
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgb(15 23 42 / 12%);
+  height: min(72vh, 52rem);
+  min-height: 32rem;
+  overflow: hidden;
+  width: 100%;
+}
+
+.diagram-canvas .react-flow {
+  background: #f8fafc;
+}
+
+.diagram-canvas .react-flow__node {
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.uml-node {
+  background: #fff;
+  border: 1.5px solid #334155;
+  border-radius: 7px;
+  box-shadow: 0 2px 5px rgb(15 23 42 / 12%);
+  box-sizing: border-box;
+  color: #172033;
+  display: block;
+  overflow: hidden;
+  transition: opacity 120ms ease, outline-width 120ms ease, transform 120ms ease;
+}
+
+.uml-node--enum {
+  border-radius: 12px;
+}
+
+.uml-node--datatype {
+  border-radius: 999px;
+}
+
+.uml-node--external {
+  border-style: dashed;
+  color: #475569;
+}
+
+.uml-node--selected {
+  outline: 4px double #111827;
+  outline-offset: 3px;
+  transform: translateY(-1px);
+}
+
+.uml-node--neighbor {
+  border-width: 3px;
+}
+
+.uml-node--dimmed {
+  opacity: 0.35;
+}
+
+.uml-node__handle {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.uml-node__header {
+  align-content: center;
+  box-shadow: inset 0 -1px 0 #64748b;
+  box-sizing: border-box;
+  display: grid;
+  height: 52px;
+  justify-items: center;
+  min-height: 52px;
+  padding: 4px 16px;
+}
+
+.uml-node__stereotype {
+  color: #475569;
+  font-size: 11px;
+  line-height: 14px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uml-node__title {
+  font-size: 14px;
+  line-height: 18px;
+  max-width: 100%;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uml-node__compartment {
+  padding-inline: 8px;
+}
+
+.uml-node__compartment:first-of-type {
+  padding-top: 8px;
+}
+
+.uml-node__compartment:last-of-type {
+  padding-bottom: 8px;
+}
+
+.uml-node__compartment + .uml-node__compartment {
+  box-shadow: inset 0 1px 0 #94a3b8;
+}
+
+.uml-node__row {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  box-sizing: border-box;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  height: 24px;
+  justify-content: space-between;
+  line-height: 18px;
+  overflow: hidden;
+  padding: 3px 8px;
+  text-align: left;
+  width: 100%;
+}
+
+.uml-node__row:hover,
+.uml-node__row:focus-visible {
+  background: #e2e8f0;
+  outline: 2px solid #0f172a;
+  outline-offset: -2px;
+}
+
+.uml-node__row--secondary {
+  align-items: flex-start;
+  flex-direction: column;
+  height: 42px;
+}
+
+.uml-node__row > span,
+.uml-node__row > small {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uml-node__row small {
+  color: #64748b;
+  font-size: 11px;
+  height: 18px;
+  line-height: 18px;
+}
+
+.uml-node__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px 8px 8px;
+}
+
+.uml-node__badge {
+  border: 1px solid currentcolor;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 14px;
+  padding: 0 4px;
+}
+
+.uml-node__badge--warning,
+.uml-node__badge--error {
+  text-decoration: underline wavy;
+}
+
+.semantic-edge__path {
+  fill: none;
+  stroke: #334155;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.semantic-edge__path--selected {
+  stroke: #020617;
+  stroke-width: 3.5;
+}
+
+.semantic-edge__path--neighbor {
+  stroke-width: 2.8;
+}
+
+.semantic-edge__path--dimmed {
+  opacity: 0.32;
+}
+
+.semantic-edge__marker {
+  pointer-events: none;
+  stroke: #334155;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+.semantic-edge__marker--uml-hollow-triangle {
+  fill: #f8fafc;
+}
+
+.semantic-edge__marker--uml-filled-diamond,
+.semantic-edge__marker--uml-navigable-arrow {
+  fill: #334155;
+}
+
+.semantic-edge__label {
+  fill: #172033;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 11px;
+  paint-order: stroke;
+  pointer-events: none;
+  stroke: #f8fafc;
+  stroke-linejoin: round;
+  stroke-width: 4px;
 }

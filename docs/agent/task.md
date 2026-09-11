@@ -557,26 +557,28 @@ Render LayoutModel interactively without allowing React Flow state to become sem
 
 ### Checklist
 
-- [ ] Create a thin adapter from LayoutModel to React Flow nodes/edges.
-- [ ] Implement custom EClass, EEnum, EDataType, and external-placeholder nodes.
-- [ ] Render class compartments according to precomputed sizing metrics.
-- [ ] Implement generalization edge with hollow triangle at supertype end.
-- [ ] Implement composition edge with filled diamond at container/source end.
-- [ ] Implement ordinary navigable reference edge and bidirectional association representation.
-- [ ] Place role labels/multiplicities using DiagramRelation end metadata rather than recomputing Ecore semantics in edge components.
-- [ ] Render parallel/self-reference routes without semantic deduplication.
-- [ ] Preserve `semanticId` selection mapping for nodes, rows, and edges.
-- [ ] Add selection/highlight/de-emphasis states that remain understandable without color alone.
-- [ ] Add component/unit tests for arrowhead/diamond direction and accessible labels where practical.
-- [ ] Add initial Playwright visual snapshots for core relation fixtures.
+- [x] Create a thin adapter from LayoutModel to React Flow nodes/edges.
+- [x] Implement custom EClass, EEnum, EDataType, and external-placeholder nodes.
+- [x] Render class compartments according to precomputed sizing metrics.
+- [x] Implement generalization edge with hollow triangle at supertype end.
+- [x] Implement composition edge with filled diamond at container/source end.
+- [x] Implement ordinary navigable reference edge and bidirectional association representation.
+- [x] Place role labels/multiplicities using DiagramRelation end metadata rather than recomputing Ecore semantics in edge components.
+- [x] Render parallel/self-reference routes without semantic deduplication.
+- [x] Preserve `semanticId` selection mapping for nodes, rows, and edges.
+- [x] Add selection/highlight/de-emphasis states that remain understandable without color alone.
+- [x] Add component/unit tests for arrowhead/diamond direction and accessible labels where practical.
+- [x] Add initial Playwright visual snapshots for core relation fixtures.
 
 ### Acceptance
 
-- [ ] Renderer code contains no Ecore URI resolution logic.
-- [ ] Relation direction matches mapper tests visually and semantically.
-- [ ] Selection reports exact semantic IDs.
-- [ ] Core fixtures render without overlapping node internals or clipped headers.
-- [ ] Relevant unit + Playwright visual tests pass.
+- [x] Renderer code contains no Ecore URI resolution logic.
+- [x] Relation direction matches mapper tests visually and semantically.
+- [x] Selection reports exact semantic IDs.
+- [x] Core fixtures render without overlapping node internals or clipped headers.
+- [x] Relevant unit + Playwright visual tests pass.
+
+Completion note (2026-09-12): renderer/notation suite (17 tests), full unit suite (134 tests), TypeScript typecheck, ESLint, production build, and Playwright visual/selection suite (6 tests) passed. Visual review covered multiple inheritance, composition, valid opposites, unresolved external references, and self-reference routes.
 
 ### Commit
 
