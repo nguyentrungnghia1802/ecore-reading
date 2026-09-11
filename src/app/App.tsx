@@ -8,6 +8,7 @@ import { buildSearchIndex, type SearchIndexItem } from '../search/search-index';
 import { DetailModeSelector } from './components/DetailModeSelector';
 import { EmptyState } from './components/EmptyState';
 import { ErrorState } from './components/ErrorState';
+import { Inspector } from './components/Inspector';
 import { LoadingState } from './components/LoadingState';
 import { ModelExplorer } from './components/ModelExplorer';
 import { SearchDialog } from './components/SearchDialog';
@@ -23,6 +24,7 @@ export function App() {
   const [workspace, setWorkspace] = useState<WorkspaceState>(createEmptyWorkspace);
   const [selection, setSelection] = useState<SemanticSelection | null>(null);
   const [isExplorerOpen, setIsExplorerOpen] = useState(true);
+  const [isInspectorOpen, setIsInspectorOpen] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const searchIndexItems = useMemo(() => {
@@ -226,6 +228,19 @@ export function App() {
                 onSelectionChange={setSelection}
               />
             </div>
+
+            <Inspector
+              model={workspace.model}
+              selection={selection}
+              onSelectSemanticId={(id) => {
+                const isClassifier = workspace.model.classifiers.some((c) => c.id === id);
+                setSelection(selectionForSemanticIds(isClassifier ? 'node' : 'row', [id]));
+              }}
+              isOpen={isInspectorOpen}
+              onToggleOpen={() => {
+                setIsInspectorOpen((open) => !open);
+              }}
+            />
           </main>
 
           <WorkspaceStatusBar model={workspace.model} />

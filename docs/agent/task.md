@@ -855,22 +855,24 @@ feat: add progressive ecore detail modes
 
 ### Checklist
 
-- [ ] Build inspector selection model keyed by semantic ID/sub-selection, not display name.
-- [ ] Class inspector: package/path, abstract/interface, supertypes, member counts, annotations, diagnostics, source metadata.
-- [ ] EReference inspector: owner, target, bounds, containment, opposite, resolveProxies, feature flags, raw URI.
-- [ ] Merged association inspector shows both underlying EReferences clearly.
-- [ ] Operation inspector: return type, multiplicity, parameters, exceptions, type parameters, annotations.
-- [ ] Enum/datatype inspector includes relevant exact Ecore metadata.
-- [ ] Diagnostic selection scrolls/opens the relevant inspector section.
-- [ ] Use collapsible groups for exhaustive flags.
-- [ ] Opening/closing inspector must not re-layout graph.
-- [ ] Add accessibility labels and keyboard close behavior.
+- [x] Build inspector selection model keyed by semantic ID/sub-selection, not display name.
+- [x] Class inspector: package/path, abstract/interface, supertypes, member counts, annotations, diagnostics, source metadata.
+- [x] EReference inspector: owner, target, bounds, containment, opposite, resolveProxies, feature flags, raw URI.
+- [x] Merged association inspector shows both underlying EReferences clearly.
+- [x] Operation inspector: return type, multiplicity, parameters, exceptions, type parameters, annotations.
+- [x] Enum/datatype inspector includes relevant exact Ecore metadata.
+- [x] Diagnostic selection scrolls/opens the relevant inspector section.
+- [x] Use collapsible groups for exhaustive flags.
+- [x] Opening/closing inspector must not re-layout graph.
+- [x] Add accessibility labels and keyboard close behavior.
 
 ### Acceptance
 
-- [ ] Every visible semantic relation can be traced back to exact source EReference ID(s).
-- [ ] Unresolved external target is clearly described as unresolved, never guessed.
-- [ ] Inspector tests cover containment/opposite/generic examples.
+- [x] Every visible semantic relation can be traced back to exact source EReference ID(s).
+- [x] Unresolved external target is clearly described as unresolved, never guessed.
+- [x] Inspector tests cover containment/opposite/generic examples.
+
+Completion note (2026-09-12): P2-05 Semantic Inspector implemented with exhaustive classifier, feature, relation (including merged bidirectional eOpposite pairs), and external unresolved inspection, collapsible sections, cross-reference navigation, unit tests (3 tests), and Playwright E2E suite (3 tests) passed.
 
 ### Commit
 
