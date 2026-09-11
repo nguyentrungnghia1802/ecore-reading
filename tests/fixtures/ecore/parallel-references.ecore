@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="parallelReferences" nsURI="urn:ecore-visualizer:parallel-references" nsPrefix="parallel">
+  <eClassifiers xsi:type="ecore:EClass" name="Order">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="buyer" lowerBound="1" eType="#//Party"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="seller" lowerBound="1" eType="#//Party"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reviewer" eType="#//Party"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Party"/>
+</ecore:EPackage>

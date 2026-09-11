@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="workflowEngine" nsURI="urn:ecore-visualizer:workflow-engine" nsPrefix="workflow">
+  <eAnnotations source="urn:ecore-visualizer:documentation">
+    <details key="purpose" value="Realistic executable-workflow structure without runtime behavior"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="Named" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Workflow" eSuperTypes="#//Named">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vertices" lowerBound="1" upperBound="-1" containment="true" eType="#//Vertex" eOpposite="#//Vertex/workflow"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" upperBound="-1" containment="true" eType="#//Transition" eOpposite="#//Transition/workflow"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultActor" eType="#//Actor"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Vertex" abstract="true" eSuperTypes="#//Named">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="workflow" lowerBound="1" eType="#//Workflow" eOpposite="#//Workflow/vertices"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incoming" upperBound="-1" eType="#//Transition" eOpposite="#//Transition/target"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoing" upperBound="-1" eType="#//Transition" eOpposite="#//Transition/source"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="State" abstract="true" eSuperTypes="#//Vertex">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//ExecutionStatus"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TaskState" eSuperTypes="#//State">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="duration" eType="#//Duration"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assignments" upperBound="-1" containment="true" eType="#//Assignment" eOpposite="#//Assignment/task"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FinalState" eSuperTypes="#//State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Gateway" eSuperTypes="#//Vertex">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//GatewayKind"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Named">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="workflow" lowerBound="1" eType="#//Workflow" eOpposite="#//Workflow/transitions"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1" eType="#//Vertex" eOpposite="#//Vertex/outgoing"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1" eType="#//Vertex" eOpposite="#//Vertex/incoming"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Actor" eSuperTypes="#//Named">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assignments" upperBound="-1" eType="#//Assignment" eOpposite="#//Assignment/actor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="roles" upperBound="-1" eType="#//Role" eOpposite="#//Role/actors"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Role" eSuperTypes="#//Named">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actors" upperBound="-1" eType="#//Actor" eOpposite="#//Actor/roles"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Assignment">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="task" lowerBound="1" eType="#//TaskState" eOpposite="#//TaskState/assignments"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actor" lowerBound="1" eType="#//Actor" eOpposite="#//Actor/assignments"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="approver" eType="#//Actor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="delegate" eType="#//Actor"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ExecutionStatus">
+    <eLiterals name="PENDING" value="0" literal="pending"/>
+    <eLiterals name="RUNNING" value="1" literal="running"/>
+    <eLiterals name="DONE" value="2" literal="done"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="GatewayKind">
+    <eLiterals name="EXCLUSIVE" value="0" literal="exclusive"/>
+    <eLiterals name="PARALLEL" value="1" literal="parallel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Duration" instanceClassName="java.time.Duration"/>
+</ecore:EPackage>

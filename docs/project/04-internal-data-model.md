@@ -109,8 +109,15 @@ export interface GenericTypeRef {
 export interface EcoreModel {
   sourceName: string;
   packages: EcorePackage[];
+  classifiers: EcoreClassifier[];
+  features: EcoreFeature[];
+  operations: EcoreOperation[];
   classifierById: ReadonlyMap<string, EcoreClassifier>;
   featureById: ReadonlyMap<string, EcoreFeature>;
+  operationById: ReadonlyMap<string, EcoreOperation>;
+  packageById: ReadonlyMap<string, EcorePackage>;
+  parameterById: ReadonlyMap<string, EcoreParameter>;
+  typeParameterById: ReadonlyMap<string, EcoreTypeParameter>;
   diagnostics: Diagnostic[];
 }
 
@@ -155,10 +162,12 @@ export interface EcoreReference {
   id: string;
   ownerClassId: string;
   name: string;
-  target: ResolvedClassifierRef;
+  target: ResolvedClassifierRef | null;
+  genericType?: GenericTypeRef;
   multiplicity: Multiplicity;
   containment: boolean;
   oppositeReferenceId?: string;
+  rawOpposite?: string;
   resolveProxies: boolean;
   ordered: boolean;
   unique: boolean;
@@ -237,6 +246,7 @@ export interface Size { width: number; height: number }
 export interface LayoutNode extends DiagramNode {
   position: Point;
   size: Size;
+  text: NodeTextLayout;
 }
 
 export interface LayoutRelation extends DiagramRelation {

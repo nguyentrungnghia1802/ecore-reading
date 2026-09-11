@@ -116,12 +116,12 @@ A task adding a new runtime dependency must state why browser APIs/current depen
 Prefer explicit boundaries such as:
 
 ```ts
-parseRawEcore(xml: XMLDocument, sourceName: string): RawEcoreDocument
-resolveEcore(raw: RawEcoreDocument): EcoreModel
+parseRawEcore(source: string, options?: ParseRawEcoreOptions): RawEcoreDocument
+buildEcoreModel(raw: RawEcoreDocument): EcoreModel
 buildDiagram(model: EcoreModel, options: DiagramOptions): DiagramModel
-sizeDiagram(diagram: DiagramModel, metrics: DiagramMetrics): SizedDiagram
-layoutDiagram(input: SizedDiagram, profile: LayoutProfile): Promise<LayoutModel>
-serializeSvg(diagram: DiagramModel, layout: LayoutModel, options: SvgExportOptions): string
+sizeDiagram(diagram: DiagramModel, metrics?: DiagramMetrics): SizedDiagram
+layoutSizedDiagram(input: SizedDiagram, profile: LayoutProfile): Promise<LayoutModel>
+serializeSvg(diagram: DiagramModel, layout: LayoutModel, options?: SvgExportOptions): string
 ```
 
 Exact names may evolve through implementation, but changes must remain coherent across docs/tests/tasks.

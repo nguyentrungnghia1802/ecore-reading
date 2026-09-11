@@ -85,7 +85,8 @@ export function DiagramCanvas({
         edges={elements.edges}
         edgesReconnectable={false}
         fitView
-        fitViewOptions={{ padding: 0.12 }}
+        fitViewOptions={{ minZoom: 0.05, padding: 0.12 }}
+        minZoom={0.05}
         nodes={elements.nodes}
         nodesConnectable={false}
         nodesDraggable={false}

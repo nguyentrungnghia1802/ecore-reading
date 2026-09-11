@@ -9,7 +9,8 @@
     "typecheck": "tsc -b --pretty false",
     "lint": "eslint .",
     "test": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:performance": "vitest run --config vitest.performance.config.ts"
   },
   "dependencies": {
     "@xyflow/react": "^12.11.6",

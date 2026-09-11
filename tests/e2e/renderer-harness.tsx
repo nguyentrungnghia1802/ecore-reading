@@ -20,6 +20,8 @@ const fixtureNames = new Set([
   'external-reference.ecore',
   'self-reference.ecore',
   'all-features.ecore',
+  'parallel-references.ecore',
+  'real-world/research-workflow.ecore',
 ]);
 
 function requestedFixture(): string {

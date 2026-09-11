@@ -135,15 +135,13 @@ Application protocol:
 ```ts
 interface LayoutRequest {
   requestId: number;
-  diagram: SerializableDiagramGeometryInput;
-  profile: LayoutProfile;
+  diagram: SizedDiagram;
+  profileId: LayoutProfileId;
 }
 
-interface LayoutResponse {
-  requestId: number;
-  result?: LayoutModel;
-  error?: string;
-}
+type LayoutResponse =
+  | { requestId: number; result: LayoutModel }
+  | { requestId: number; error: string };
 ```
 
 The main thread only applies the latest relevant request.

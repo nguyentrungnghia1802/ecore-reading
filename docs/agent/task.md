@@ -661,25 +661,27 @@ Before moving to broad UI work, prove the hard core works end-to-end on represen
 
 ### Checklist
 
-- [ ] Add at least 2–3 legally usable representative real-world or realistic-complexity `.ecore` fixtures, with source/license note if copied externally.
-- [ ] Add synthetic 50-node and 100+ node stress fixtures/generators with deterministic structure.
-- [ ] Create pipeline integration tests: file text → parse → resolve → map → size → layout → SVG.
-- [ ] Assert no lost classifier/relation IDs between stages.
-- [ ] Assert all exported/layout geometry finite and bounded.
-- [ ] Add performance measurement harness for parse, resolve, map, size, layout, export.
-- [ ] Record baseline results in a test/dev artifact or project doc without turning variable wall-clock values into flaky hard CI assertions.
-- [ ] Add visual regression for multiple inheritance, dense cross-reference, containment, parallel edges, self-reference.
-- [ ] Test malformed input recovery at non-UI pipeline boundary.
-- [ ] Fix semantic/layout regressions found by corpus rather than excluding fixtures.
-- [ ] Review Phase 1 docs/interfaces for contradictions introduced during implementation and update them.
+- [x] Add at least 2–3 legally usable representative real-world or realistic-complexity `.ecore` fixtures, with source/license note if copied externally.
+- [x] Add synthetic 50-node and 100+ node stress fixtures/generators with deterministic structure.
+- [x] Create pipeline integration tests: file text → parse → resolve → map → size → layout → SVG.
+- [x] Assert no lost classifier/relation IDs between stages.
+- [x] Assert all exported/layout geometry finite and bounded.
+- [x] Add performance measurement harness for parse, resolve, map, size, layout, export.
+- [x] Record baseline results in a test/dev artifact or project doc without turning variable wall-clock values into flaky hard CI assertions.
+- [x] Add visual regression for multiple inheritance, dense cross-reference, containment, parallel edges, self-reference.
+- [x] Test malformed input recovery at non-UI pipeline boundary.
+- [x] Fix semantic/layout regressions found by corpus rather than excluding fixtures.
+- [x] Review Phase 1 docs/interfaces for contradictions introduced during implementation and update them.
 
 ### Acceptance
 
-- [ ] Semantic core milestone in `14-roadmap-and-release-criteria.md` is satisfied.
-- [ ] Visual core milestone is technically satisfied even if workspace UI is not polished.
-- [ ] No known test fixture displays the wrong relation kind/direction/multiplicity.
-- [ ] Medium layout does not block main thread in worker-based application path.
-- [ ] Full unit/integration/visual suite required by current repository passes.
+- [x] Semantic core milestone in `14-roadmap-and-release-criteria.md` is satisfied.
+- [x] Visual core milestone is technically satisfied even if workspace UI is not polished.
+- [x] No known test fixture displays the wrong relation kind/direction/multiplicity.
+- [x] Medium layout does not block main thread in worker-based application path.
+- [x] Full unit/integration/visual suite required by current repository passes.
+
+Completion note (2026-09-12): realistic and deterministic 50/120-node pipeline suites, malformed-input recovery, non-gating performance baselines, and dense/parallel visual regressions were added. The Vite module-worker regression was fixed by constructing ELK through its API with an explicit worker factory inside the layout worker. `npm test -- --run` (154 tests), `npm run test:e2e` (12 tests), `npm run test:performance` (3 measured cases), typecheck, lint, and production build passed.
 
 ### Commit
 
@@ -1172,16 +1174,16 @@ chore: prepare ecore visualizer release pipeline
 
 Do not enter Phase 2 until all are true:
 
-- [ ] Raw parser handles required XML/XMI shapes.
-- [ ] URI resolver handles local/name/positional/builtin/external references.
-- [ ] Canonical EcoreModel correctly represents defaults, inheritance, containment, eOpposite, generics, annotations.
-- [ ] Diagram mapper has explicit tests for every relation kind and multiplicity end.
-- [ ] Deterministic node sizing exists.
-- [ ] ELK worker layout preserves every relation ID and ignores stale results.
-- [ ] React Flow renderer visually preserves semantic direction/notation.
-- [ ] True vector SVG export exists.
-- [ ] Realistic/stress pipeline tests are green.
-- [ ] No known semantic correctness issue is intentionally deferred to Phase 2.
+- [x] Raw parser handles required XML/XMI shapes.
+- [x] URI resolver handles local/name/positional/builtin/external references.
+- [x] Canonical EcoreModel correctly represents defaults, inheritance, containment, eOpposite, generics, annotations.
+- [x] Diagram mapper has explicit tests for every relation kind and multiplicity end.
+- [x] Deterministic node sizing exists.
+- [x] ELK worker layout preserves every relation ID and ignores stale results.
+- [x] React Flow renderer visually preserves semantic direction/notation.
+- [x] True vector SVG export exists.
+- [x] Realistic/stress pipeline tests are green.
+- [x] No known semantic correctness issue is intentionally deferred to Phase 2.
 
 ## Phase 2 completion / release candidate
 

@@ -12,5 +12,8 @@
   "xmi-wrapper.ecore": "xmi:XMI wrapper containing an EPackage.",
   "malformed.xml": "Intentionally malformed XML for parser diagnostics.",
   "doctype.xml": "Unsafe DOCTYPE input rejected before DOM parsing.",
-  "real-world/advanced.ecore": "Real-world-like generics, annotations, inheritance, references, exceptions, enum and datatype metadata."
+  "parallel-references.ecore": "Three unrelated navigable roles between the same classifiers remain distinct.",
+  "real-world/advanced.ecore": "Original CC0 realistic fixture combining generics, annotations, inheritance, references, exceptions, enum and datatype metadata.",
+  "real-world/research-workflow.ecore": "Original CC0 realistic research model with containment, opposites, dense references, and multiple inheritance.",
+  "real-world/workflow-engine.ecore": "Original CC0 realistic workflow model with inheritance, containment, opposites, and parallel actor references."
 }
