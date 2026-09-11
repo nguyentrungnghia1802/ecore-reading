@@ -1247,5 +1247,63 @@ main:not(.workspace-main) {
   white-space: nowrap;
 }
 
+/* ==========================================================================
+   Detail Mode Selector & Zoom LOD Styles
+   ========================================================================== */
+.detail-mode-selector {
+  display: flex;
+  align-items: center;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 120ms ease;
+  user-select: none;
+}
+
+.mode-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.mode-btn--active {
+  background: var(--bg-surface);
+  color: var(--brand-primary);
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 0.08);
+}
+
+.mode-btn__shortcut {
+  font-size: 10px;
+  opacity: 0.55;
+  padding: 1px 3px;
+  background: var(--border-subtle);
+  border-radius: 3px;
+}
+
+/* Low-Zoom Simplification (LOD) */
+.diagram-canvas--low-zoom .uml-node:not(.uml-node--selected) .uml-node__row span,
+.diagram-canvas--low-zoom .uml-node:not(.uml-node--selected) .uml-node__row small,
+.diagram-canvas--low-zoom .uml-node:not(.uml-node--selected) .uml-node__badges {
+  opacity: 0;
+  pointer-events: none;
+}
+
+
 
 

@@ -43,6 +43,7 @@ export function DiagramCanvas({
   className,
 }: DiagramCanvasProps) {
   const [localSelection, setLocalSelection] = useState<SemanticSelection | null>(null);
+  const [isLowZoom, setIsLowZoom] = useState(false);
   const activeSelection = selection === undefined ? localSelection : selection;
   const publishSelection = useCallback((next: SemanticSelection | null) => {
     if (selection === undefined) setLocalSelection(next);
@@ -78,7 +79,12 @@ export function DiagramCanvas({
     }
   }, [publishSelection]);
   return (
-    <div className={['diagram-canvas', className].filter(Boolean).join(' ')} data-testid="diagram-canvas">
+    <div
+      className={['diagram-canvas', isLowZoom ? 'diagram-canvas--low-zoom' : '', className]
+        .filter(Boolean)
+        .join(' ')}
+      data-testid="diagram-canvas"
+    >
       <ReactFlow<UmlFlowNode, SemanticFlowEdge>
         aria-label="Ecore semantic diagram"
         edgeTypes={edgeTypes}
@@ -92,6 +98,7 @@ export function DiagramCanvas({
         nodesDraggable={false}
         nodeTypes={nodeTypes}
         onEdgeClick={handleEdgeClick}
+        onMove={(_event, viewport) => setIsLowZoom(viewport.zoom < 0.45)}
         onNodeClick={handleNodeClick}
         onPaneClick={() => publishSelection(null)}
         onSelectionChange={handleFlowSelectionChange}

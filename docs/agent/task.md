@@ -818,20 +818,22 @@ feat: add semantic ecore search and jump
 
 ### Checklist
 
-- [ ] Add visible mode selector for Overview, Standard, Detailed, Ecore.
-- [ ] Wire mode to DiagramModel mapper and deterministic node sizing.
-- [ ] Re-layout only when node geometry/visible graph genuinely changes.
-- [ ] Implement optional low-zoom simplification that hides tiny row text without changing semantic mode.
-- [ ] Keep selected node meaningfully inspectable at low zoom.
-- [ ] Add shortcuts `1`–`4` when canvas context makes them safe.
-- [ ] Add visual regression for all four modes on same fixture.
-- [ ] Verify mode labels/tooltips explain semantic differences.
+- [x] Add visible mode selector for Overview, Standard, Detailed, Ecore.
+- [x] Wire mode to DiagramModel mapper and deterministic node sizing.
+- [x] Re-layout only when node geometry/visible graph genuinely changes.
+- [x] Implement optional low-zoom simplification that hides tiny row text without changing semantic mode.
+- [x] Keep selected node meaningfully inspectable at low zoom.
+- [x] Add shortcuts `1`–`4` when canvas context makes them safe.
+- [x] Add visual regression for all four modes on same fixture.
+- [x] Verify mode labels/tooltips explain semantic differences.
 
 ### Acceptance
 
-- [ ] Mode switch cannot corrupt selection semantic ID.
-- [ ] Standard and Ecore views visibly differ as documented.
-- [ ] Low zoom does not create unreadable text noise.
+- [x] Mode switch cannot corrupt selection semantic ID.
+- [x] Standard and Ecore views visibly differ as documented.
+- [x] Low zoom does not create unreadable text noise.
+
+Completion note (2026-09-12): P2-04 DetailModeSelector added with Overview/Standard/Detailed/Ecore modes, keyboard shortcuts 1-4, low-zoom LOD simplification, selection preservation across modes, unit test, and Playwright E2E suite passed.
 
 ### Commit
 

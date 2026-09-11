@@ -1,6 +1,11 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
+import { buildDiagram } from '../diagram/mapper';
+import type { DiagramDetailMode } from '../diagram/model';
+import { sizeDiagram } from '../diagram/sizing';
+import { getLayoutProfile, layoutSizedDiagram } from '../layout';
 import { DiagramCanvas, selectionForSemanticIds, type SemanticSelection } from '../renderer';
 import { buildSearchIndex, type SearchIndexItem } from '../search/search-index';
+import { DetailModeSelector } from './components/DetailModeSelector';
 import { EmptyState } from './components/EmptyState';
 import { ErrorState } from './components/ErrorState';
 import { LoadingState } from './components/LoadingState';
@@ -130,6 +135,30 @@ export function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const handleModeChange = useCallback(
+    async (newMode: DiagramDetailMode) => {
+      if (workspace.status !== 'ready' || workspace.options.detailMode === newMode) return;
+      const newOptions = { ...workspace.options, detailMode: newMode };
+      const newDiagram = buildDiagram(workspace.model, newOptions);
+      const newSized = sizeDiagram(newDiagram);
+      const newLayout = await layoutSizedDiagram(
+        newSized,
+        getLayoutProfile(workspace.layoutProfile),
+      );
+      setWorkspace((prev) => {
+        if (prev.status !== 'ready') return prev;
+        return {
+          ...prev,
+          options: newOptions,
+          diagram: newDiagram,
+          sized: newSized,
+          layout: newLayout,
+        };
+      });
+    },
+    [workspace],
+  );
+
   return (
     <div className="workspace-app" data-testid="workspace-app">
       {workspace.status === 'empty' && (
@@ -168,7 +197,14 @@ export function App() {
             onOpenSearch={() => {
               setIsSearchOpen(true);
             }}
-          />
+          >
+            <DetailModeSelector
+              activeMode={workspace.options.detailMode}
+              onChangeMode={(mode) => {
+                void handleModeChange(mode);
+              }}
+            />
+          </WorkspaceHeader>
 
           <main className="workspace-main">
             <ModelExplorer
