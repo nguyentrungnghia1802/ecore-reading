@@ -178,17 +178,33 @@ export function App() {
     }
   }, []);
 
-  // Global Ctrl/Cmd + K shortcut for search
+  // Global keyboard shortcuts (Ctrl+K for search, Ctrl+O for open, Escape to clear selection)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setIsSearchOpen((open) => !open);
+        return;
+      }
+
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'o') {
+        e.preventDefault();
+        const fileInput = document.querySelector<HTMLInputElement>(
+          'input[type="file"][data-testid="file-input"], input[type="file"][data-testid="header-file-input"]',
+        );
+        fileInput?.click();
+        return;
+      }
+
+      if (e.key === 'Escape') {
+        if (!isSearchOpen && !isExportOpen) {
+          setSelection(null);
+        }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isSearchOpen, isExportOpen]);
 
   const relayoutDiagram = useCallback(
     async (

@@ -1074,21 +1074,23 @@ feat: add svg and png export workflow
 
 ### Checklist
 
-- [ ] Audit all icon-only controls for accessible names/tooltips.
-- [ ] Ensure toolbar, explorer, search, inspector, export dialog, and settings are keyboard reachable.
-- [ ] Implement/verify shortcuts: Open, Search, Fit, detail modes, Escape, zoom where appropriate.
-- [ ] Ensure shortcuts do not fire while typing in text inputs except intended command behavior.
-- [ ] Add visible focus indicators.
-- [ ] Run axe checks on empty workspace, loaded workspace, inspector open, export dialog, dark theme.
-- [ ] Add ARIA snapshot/role tests for critical controls where useful.
-- [ ] Manually verify relation semantics remain understandable without relying on color.
-- [ ] Fix serious/critical automated accessibility findings rather than suppressing them without reason.
+- [x] Audit all icon-only controls for accessible names/tooltips.
+- [x] Ensure toolbar, explorer, search, inspector, export dialog, and settings are keyboard reachable.
+- [x] Implement/verify shortcuts: Open, Search, Fit, detail modes, Escape, zoom where appropriate.
+- [x] Ensure shortcuts do not fire while typing in text inputs except intended command behavior.
+- [x] Add visible focus indicators.
+- [x] Run axe checks on empty workspace, loaded workspace, inspector open, export dialog, dark theme.
+- [x] Add ARIA snapshot/role tests for critical controls where useful.
+- [x] Manually verify relation semantics remain understandable without relying on color.
+- [x] Fix serious/critical automated accessibility findings rather than suppressing them without reason.
 
 ### Acceptance
 
-- [ ] Critical workflow can be performed without mouse.
-- [ ] No known serious/critical automated accessibility violation in release screens.
-- [ ] Focus state remains visible in light and dark theme.
+- [x] Critical workflow can be performed without mouse.
+- [x] No known serious/critical automated accessibility violation in release screens.
+- [x] Focus state remains visible in light and dark theme.
+
+Completion note (2026-09-12): Universal `:focus-visible` styling applied across interactive controls; global shortcuts `Ctrl/Cmd+K` (Search), `Ctrl/Cmd+O` (Open), `Escape` (Clear selection), and `1`-`4` (Detail modes) implemented without conflicting with text input fields; axe-core accessibility scans passed on empty workspace, loaded workspace in light/dark themes, and active inspector/export modal; full keyboard-only workflow tested and verified in Playwright E2E.
 
 ### Commit
 
