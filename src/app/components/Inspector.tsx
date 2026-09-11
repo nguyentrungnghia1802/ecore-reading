@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { FocusDepth } from '../../diagram/focus/neighborhood-focus';
 import type {
   EcoreAttribute,
   EcoreClass,
@@ -14,6 +15,7 @@ interface InspectorProps {
   model: EcoreModel;
   selection: SemanticSelection | null;
   onSelectSemanticId: (semanticId: string) => void;
+  onSetFocus?: ((semanticId: string, depth: FocusDepth) => void) | undefined;
   isOpen: boolean;
   onToggleOpen: () => void;
 }
@@ -22,6 +24,7 @@ export function Inspector({
   model,
   selection,
   onSelectSemanticId,
+  onSetFocus,
   isOpen,
   onToggleOpen,
 }: InspectorProps) {
@@ -97,6 +100,7 @@ export function Inspector({
             semanticId={selection.primarySemanticId}
             model={model}
             onSelectSemanticId={onSelectSemanticId}
+            onSetFocus={onSetFocus}
           />
         )}
 
@@ -124,10 +128,12 @@ function NodeInspector({
   semanticId,
   model,
   onSelectSemanticId,
+  onSetFocus,
 }: {
   semanticId: string;
   model: EcoreModel;
   onSelectSemanticId: (id: string) => void;
+  onSetFocus?: ((id: string, depth: FocusDepth) => void) | undefined;
 }) {
   const classifier = model.classifierById.get(semanticId);
 
@@ -176,6 +182,50 @@ function NodeInspector({
           <span className="inspector-prop__label">Semantic ID</span>
           <span className="inspector-prop__value"><code>{classifier.id}</code></span>
         </div>
+
+        {onSetFocus && (
+          <div className="inspector-focus-box">
+            <span className="inspector-prop__label">Focus:</span>
+            <div className="inspector-focus-buttons" role="group" aria-label="Focus neighborhood">
+              <button
+                type="button"
+                className="btn-pill"
+                data-testid="inspector-focus-1"
+                onClick={() => onSetFocus(classifier.id, 1)}
+                title="Focus 1-hop neighborhood"
+              >
+                1-hop
+              </button>
+              <button
+                type="button"
+                className="btn-pill"
+                data-testid="inspector-focus-2"
+                onClick={() => onSetFocus(classifier.id, 2)}
+                title="Focus 2-hop neighborhood"
+              >
+                2-hop
+              </button>
+              <button
+                type="button"
+                className="btn-pill"
+                data-testid="inspector-focus-3"
+                onClick={() => onSetFocus(classifier.id, 3)}
+                title="Focus 3-hop neighborhood"
+              >
+                3-hop
+              </button>
+              <button
+                type="button"
+                className="btn-pill"
+                data-testid="inspector-focus-all"
+                onClick={() => onSetFocus(classifier.id, 'all')}
+                title="Focus all connected neighbors"
+              >
+                All
+              </button>
+            </div>
+          </div>
+        )}
 
         {classifier.kind === 'class' && (
           <>

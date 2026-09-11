@@ -893,20 +893,22 @@ feat: add semantic ecore inspector
 
 ### Checklist
 
-- [ ] Implement pure graph-neighborhood traversal over enabled semantic relation kinds.
-- [ ] Selecting node highlights first-hop neighbors without hiding unrelated nodes.
-- [ ] Add Focus action with depth 1, 2, 3, All.
-- [ ] Show active focus chip containing selected node and depth.
-- [ ] Clear focus explicitly without losing ordinary selection.
-- [ ] Decide/document how external placeholders count as hops and test it.
-- [ ] Preserve focus center after re-layout where practical.
-- [ ] Add tests for cycles and multiple paths; traversal must not loop infinitely.
+- [x] Implement pure graph-neighborhood traversal over enabled semantic relation kinds.
+- [x] Selecting node highlights first-hop neighbors without hiding unrelated nodes.
+- [x] Add Focus action with depth 1, 2, 3, All.
+- [x] Show active focus chip containing selected node and depth.
+- [x] Clear focus explicitly without losing ordinary selection.
+- [x] Decide/document how external placeholders count as hops and test it.
+- [x] Preserve focus center after re-layout where practical.
+- [x] Add tests for cycles and multiple paths; traversal must not loop infinitely.
 
 ### Acceptance
 
-- [ ] Focus is based on semantic graph distance, not screen coordinates.
-- [ ] Active focus state is always visible to user.
-- [ ] Selection alone never triggers layout.
+- [x] Focus is based on semantic graph distance, not screen coordinates.
+- [x] Active focus state is always visible to user.
+- [x] Selection alone never triggers layout.
+
+Completion note (2026-09-12): P2-06 selection emphasis (highlighting neighbors and dimming unrelated nodes without hiding) and semantic neighborhood focus (depths 1, 2, 3, All) implemented with pure graph traversal, cycle protection, external placeholder hop counting, FocusControls chip in header and Inspector, unit tests (10 tests), and Playwright E2E suite (3 tests) passed.
 
 ### Commit
 

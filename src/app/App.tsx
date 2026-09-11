@@ -1,5 +1,10 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import { buildDiagram } from '../diagram/mapper';
+import {
+  applyNeighborhoodFocus,
+  computeNeighborhoodFocus,
+  type FocusDepth,
+} from '../diagram/focus/neighborhood-focus';
+import { buildDiagram, type DiagramOptions } from '../diagram/mapper';
 import type { DiagramDetailMode } from '../diagram/model';
 import { sizeDiagram } from '../diagram/sizing';
 import { getLayoutProfile, layoutSizedDiagram } from '../layout';
@@ -8,6 +13,7 @@ import { buildSearchIndex, type SearchIndexItem } from '../search/search-index';
 import { DetailModeSelector } from './components/DetailModeSelector';
 import { EmptyState } from './components/EmptyState';
 import { ErrorState } from './components/ErrorState';
+import { FocusControls } from './components/FocusControls';
 import { Inspector } from './components/Inspector';
 import { LoadingState } from './components/LoadingState';
 import { ModelExplorer } from './components/ModelExplorer';
@@ -23,6 +29,7 @@ import type { WorkspaceState } from './state/workspace-types';
 export function App() {
   const [workspace, setWorkspace] = useState<WorkspaceState>(createEmptyWorkspace);
   const [selection, setSelection] = useState<SemanticSelection | null>(null);
+  const [focusState, setFocusState] = useState<{ rootSemanticId: string; depth: FocusDepth } | null>(null);
   const [isExplorerOpen, setIsExplorerOpen] = useState(true);
   const [isInspectorOpen, setIsInspectorOpen] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -40,6 +47,7 @@ export function App() {
       selection: null,
     });
     setSelection(null);
+    setFocusState(null);
 
     try {
       const text = await file.text();
@@ -66,6 +74,7 @@ export function App() {
       selection: null,
     });
     setSelection(null);
+    setFocusState(null);
 
     try {
       const response = await fetch(`/tests/fixtures/ecore/${fixtureName}`);
@@ -90,6 +99,7 @@ export function App() {
   const handleReset = useCallback(() => {
     setWorkspace(createEmptyWorkspace());
     setSelection(null);
+    setFocusState(null);
   }, []);
 
   // Global drag-and-drop support when loaded
@@ -137,12 +147,20 @@ export function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleModeChange = useCallback(
-    async (newMode: DiagramDetailMode) => {
-      if (workspace.status !== 'ready' || workspace.options.detailMode === newMode) return;
-      const newOptions = { ...workspace.options, detailMode: newMode };
-      const newDiagram = buildDiagram(workspace.model, newOptions);
-      const newSized = sizeDiagram(newDiagram);
+  const relayoutDiagram = useCallback(
+    async (
+      options: DiagramOptions,
+      focus: { rootSemanticId: string; depth: FocusDepth } | null,
+    ) => {
+      if (workspace.status !== 'ready') return;
+      const baseDiagram = buildDiagram(workspace.model, options);
+      const focusedDiagram = focus
+        ? applyNeighborhoodFocus(
+            baseDiagram,
+            computeNeighborhoodFocus(baseDiagram, focus.rootSemanticId, { depth: focus.depth }),
+          )
+        : baseDiagram;
+      const newSized = sizeDiagram(focusedDiagram);
       const newLayout = await layoutSizedDiagram(
         newSized,
         getLayoutProfile(workspace.layoutProfile),
@@ -151,14 +169,39 @@ export function App() {
         if (prev.status !== 'ready') return prev;
         return {
           ...prev,
-          options: newOptions,
-          diagram: newDiagram,
+          options,
+          diagram: focusedDiagram,
           sized: newSized,
           layout: newLayout,
         };
       });
     },
     [workspace],
+  );
+
+  const handleSetFocus = useCallback(
+    async (semanticId: string, depth: FocusDepth) => {
+      if (workspace.status !== 'ready') return;
+      const nextFocus = { rootSemanticId: semanticId, depth };
+      setFocusState(nextFocus);
+      await relayoutDiagram(workspace.options, nextFocus);
+    },
+    [workspace, relayoutDiagram],
+  );
+
+  const handleClearFocus = useCallback(async () => {
+    if (workspace.status !== 'ready') return;
+    setFocusState(null);
+    await relayoutDiagram(workspace.options, null);
+  }, [workspace, relayoutDiagram]);
+
+  const handleModeChange = useCallback(
+    async (newMode: DiagramDetailMode) => {
+      if (workspace.status !== 'ready' || workspace.options.detailMode === newMode) return;
+      const newOptions = { ...workspace.options, detailMode: newMode };
+      await relayoutDiagram(newOptions, focusState);
+    },
+    [workspace, focusState, relayoutDiagram],
   );
 
   return (
@@ -206,6 +249,27 @@ export function App() {
                 void handleModeChange(mode);
               }}
             />
+            <FocusControls
+              focusState={focusState}
+              selectedSemanticId={
+                selection?.kind === 'node'
+                  ? selection.primarySemanticId
+                  : selection?.kind === 'row'
+                    ? (workspace.model.featureById.get(selection.primarySemanticId)?.ownerClassId ?? null)
+                    : null
+              }
+              nodeTitle={
+                focusState
+                  ? (workspace.model.classifierById.get(focusState.rootSemanticId)?.name ?? focusState.rootSemanticId)
+                  : undefined
+              }
+              onSetFocus={(id, depth) => {
+                void handleSetFocus(id, depth);
+              }}
+              onClearFocus={() => {
+                void handleClearFocus();
+              }}
+            />
           </WorkspaceHeader>
 
           <main className="workspace-main">
@@ -235,6 +299,9 @@ export function App() {
               onSelectSemanticId={(id) => {
                 const isClassifier = workspace.model.classifiers.some((c) => c.id === id);
                 setSelection(selectionForSemanticIds(isClassifier ? 'node' : 'row', [id]));
+              }}
+              onSetFocus={(id, depth) => {
+                void handleSetFocus(id, depth);
               }}
               isOpen={isInspectorOpen}
               onToggleOpen={() => {
