@@ -4,7 +4,8 @@ import { describe, expect, it } from 'vitest';
 import manifest from './ecore/manifest.json';
 
 const fixtureDirectory = resolve(process.cwd(), 'tests/fixtures/ecore');
-const positiveFixtures = Object.keys(manifest).filter((name) => name !== 'malformed.xml');
+const negativeFixtures = new Set(['malformed.xml', 'doctype.xml']);
+const positiveFixtures = Object.keys(manifest).filter((name) => !negativeFixtures.has(name));
 
 describe('canonical Ecore fixture corpus', () => {
   it.each(positiveFixtures)('%s is well-formed XML with a documented semantic purpose', async (name) => {

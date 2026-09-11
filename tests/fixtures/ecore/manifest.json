@@ -9,5 +9,6 @@
   "external-reference.ecore": "Unresolved external classifier reference.",
   "generics.ecore": "EClass and operation generic types and parameters.",
   "xmi-wrapper.ecore": "xmi:XMI wrapper containing an EPackage.",
-  "malformed.xml": "Intentionally malformed XML for parser diagnostics."
+  "malformed.xml": "Intentionally malformed XML for parser diagnostics.",
+  "doctype.xml": "Unsafe DOCTYPE input rejected before DOM parsing."
 }

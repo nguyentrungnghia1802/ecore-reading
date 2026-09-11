@@ -150,28 +150,30 @@ src/ecore/parser/*.test.ts
 
 ### Checklist
 
-- [ ] Write failing tests for direct `EPackage` root and `xmi:XMI` wrapper before implementation.
-- [ ] Add pre-parse checks for empty file, configured max size, and `<!DOCTYPE` rejection.
-- [ ] Parse using browser XML APIs while detecting XML parser failures reliably.
-- [ ] Discover Ecore elements by namespace URI/local name rather than hardcoding only the literal `ecore` prefix.
-- [ ] Preserve package nesting and original classifier/feature order.
-- [ ] Parse classifier kinds from `xsi:type`/semantic type metadata; do not assume every `eClassifiers` is EClass.
-- [ ] Extract raw EClass, EAttribute, EReference, EOperation, EParameter, EEnum, EEnumLiteral, EDataType, ETypeParameter, EGenericType, EAnnotation structures.
-- [ ] Preserve unknown attributes and annotation data through `SourceMetadata`/raw metadata.
-- [ ] Preserve raw `eType`, `eSuperTypes`, `eOpposite`, exception, generic, and annotation references as strings/structured raw nodes.
-- [ ] Do not perform URI resolution in parser code.
-- [ ] Add parser diagnostics for unknown classifier/feature kinds while preserving inspectable source metadata.
-- [ ] Test namespace-prefix variation, missing optional attributes, malformed numeric/boolean strings, and nested packages.
-- [ ] Test that parser code has no imports from renderer/layout layers.
+- [x] Write failing tests for direct `EPackage` root and `xmi:XMI` wrapper before implementation.
+- [x] Add pre-parse checks for empty file, configured max size, and `<!DOCTYPE` rejection.
+- [x] Parse using browser XML APIs while detecting XML parser failures reliably.
+- [x] Discover Ecore elements by namespace URI/local name rather than hardcoding only the literal `ecore` prefix.
+- [x] Preserve package nesting and original classifier/feature order.
+- [x] Parse classifier kinds from `xsi:type`/semantic type metadata; do not assume every `eClassifiers` is EClass.
+- [x] Extract raw EClass, EAttribute, EReference, EOperation, EParameter, EEnum, EEnumLiteral, EDataType, ETypeParameter, EGenericType, EAnnotation structures.
+- [x] Preserve unknown attributes and annotation data through `SourceMetadata`/raw metadata.
+- [x] Preserve raw `eType`, `eSuperTypes`, `eOpposite`, exception, generic, and annotation references as strings/structured raw nodes.
+- [x] Do not perform URI resolution in parser code.
+- [x] Add parser diagnostics for unknown classifier/feature kinds while preserving inspectable source metadata.
+- [x] Test namespace-prefix variation, missing optional attributes, malformed numeric/boolean strings, and nested packages.
+- [x] Test that parser code has no imports from renderer/layout layers.
 
 ### Acceptance
 
-- [ ] Positive fixtures produce a deterministic RawEcoreDocument.
-- [ ] Malformed XML produces `XML_PARSE_ERROR` without throwing through the app boundary.
-- [ ] `DOCTYPE` fixture is rejected by the safety pre-check.
-- [ ] Unknown Ecore constructs produce diagnostics rather than silent disappearance.
-- [ ] Focused parser test suite passes.
-- [ ] Full typecheck/lint/unit suite passes.
+- [x] Positive fixtures produce a deterministic RawEcoreDocument.
+- [x] Malformed XML produces `XML_PARSE_ERROR` without throwing through the app boundary.
+- [x] `DOCTYPE` fixture is rejected by the safety pre-check.
+- [x] Unknown Ecore constructs produce diagnostics rather than silent disappearance.
+- [x] Focused parser test suite passes.
+- [x] Full typecheck/lint/unit suite passes.
+
+Completion note (2026-09-11): focused parser suite (12 tests), full unit suite (35 tests), typecheck, and lint passed; parser/raw imports contain no renderer, layout, or diagram dependency.
 
 ### Commit
 
