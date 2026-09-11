@@ -464,22 +464,24 @@ sizeDiagram(diagram: DiagramModel, metrics: DiagramMetrics): SizedDiagram
 
 ### Checklist
 
-- [ ] Define shared `DiagramMetrics` for header/row/compartment padding and min/max widths.
-- [ ] Define one text overflow/wrapping strategy used by canvas and SVG exporter.
-- [ ] Add deterministic width calculation rule for long names/signatures within documented bounds.
-- [ ] Calculate height from visible compartments/rows for each node kind/detail mode.
-- [ ] Add tests for empty class, long class, many rows, enums, datatypes, each detail mode.
-- [ ] Define side-aware layout port identifiers without leaking them into EcoreModel.
-- [ ] Assign preferred generalization ports consistent with hierarchy direction.
-- [ ] Keep association ports flexible unless explicit routing constraints improve readability.
-- [ ] Ensure sizing output is serializable for Web Worker use.
+- [x] Define shared `DiagramMetrics` for header/row/compartment padding and min/max widths.
+- [x] Define one text overflow/wrapping strategy used by canvas and SVG exporter.
+- [x] Add deterministic width calculation rule for long names/signatures within documented bounds.
+- [x] Calculate height from visible compartments/rows for each node kind/detail mode.
+- [x] Add tests for empty class, long class, many rows, enums, datatypes, each detail mode.
+- [x] Define side-aware layout port identifiers without leaking them into EcoreModel.
+- [x] Assign preferred generalization ports consistent with hierarchy direction.
+- [x] Keep association ports flexible unless explicit routing constraints improve readability.
+- [x] Ensure sizing output is serializable for Web Worker use.
 
 ### Acceptance
 
-- [ ] Repeated sizing produces identical geometry.
-- [ ] No positive node has zero/negative dimensions.
-- [ ] Renderer/export can consume the same metric constants.
-- [ ] Full typecheck/lint/unit suite passes.
+- [x] Repeated sizing produces identical geometry.
+- [x] No positive node has zero/negative dimensions.
+- [x] Renderer/export can consume the same metric constants.
+- [x] Full typecheck/lint/unit suite passes.
+
+Completion note (2026-09-11): sizing suite (11 tests), full unit suite (105 tests), typecheck, and lint passed.
 
 ### Commit
 
