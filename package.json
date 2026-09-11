@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "test": "vitest",
     "test:e2e": "playwright test",
-    "test:performance": "vitest run --config vitest.performance.config.ts"
+    "test:performance": "vitest run --config vitest.performance.config.ts",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@xyflow/react": "^12.11.6",

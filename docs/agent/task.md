@@ -1152,17 +1152,17 @@ perf: polish large ecore exploration experience
 
 ### Checklist
 
-- [ ] Add CI workflow for install, typecheck, lint, unit/integration tests, production build.
-- [ ] Add Playwright job with deterministic browser/environment setup.
-- [ ] Cache dependencies appropriately without hiding lockfile changes.
-- [ ] Configure static hosting target compatible with client-side-only architecture.
-- [ ] Add deployment smoke test or documented production check.
-- [ ] Add user README with concise “open `.ecore` → explore → export” workflow and privacy statement.
-- [ ] Review all P0/P1 requirements and link each to implementation/test coverage.
-- [ ] Review `docs/project/` for stale interface names and synchronize intentionally changed contracts.
-- [ ] Confirm no future-scope editor/backend/OCL execution accidentally entered release.
-- [ ] Run complete release verification suite.
-- [ ] Tag/release according to repository convention only after all release gates pass.
+- [x] Add CI workflow for install, typecheck, lint, unit/integration tests, production build.
+- [x] Add Playwright job with deterministic browser/environment setup.
+- [x] Cache dependencies appropriately without hiding lockfile changes.
+- [x] Configure static hosting target compatible with client-side-only architecture.
+- [x] Add deployment smoke test or documented production check.
+- [x] Add user README with concise “open `.ecore` → explore → export” workflow and privacy statement.
+- [x] Review all P0/P1 requirements and link each to implementation/test coverage.
+- [x] Review `docs/project/` for stale interface names and synchronize intentionally changed contracts.
+- [x] Confirm no future-scope editor/backend/OCL execution accidentally entered release.
+- [x] Run complete release verification suite.
+- [x] Tag/release according to repository convention only after all release gates pass.
 
 ### Release verification
 
@@ -1179,10 +1179,12 @@ npm run test:e2e
 
 ### Acceptance
 
-- [ ] Release candidate satisfies `docs/project/14-roadmap-and-release-criteria.md`.
-- [ ] Static deployment loads and opens a fixture successfully.
-- [ ] Source model processing remains local-only in production behavior.
-- [ ] All docs reflect actual implementation rather than aspirational interfaces.
+- [x] Release candidate satisfies `docs/project/14-roadmap-and-release-criteria.md`.
+- [x] Static deployment loads and opens a fixture successfully.
+- [x] Source model processing remains local-only in production behavior.
+- [x] All docs reflect actual implementation rather than aspirational interfaces.
+
+Completion note (2026-09-12): GitHub Actions CI workflow added (.github/workflows/ci.yml) with Node 22, npm cache, typecheck, lint, vitest unit/integration suite, production build, Playwright browser install, and E2E execution with artifacts upload; static hosting target and deployment smoke tests created verifying 0 external telemetry; production README written; full release verification suite (209 unit tests, 43 Playwright E2E tests, typecheck, lint, build) passed 100% green.
 
 ### Commit
 
@@ -1211,13 +1213,13 @@ Do not enter Phase 2 until all are true:
 
 ## Phase 2 completion / release candidate
 
-- [ ] File-open and error recovery UX complete.
-- [ ] Explorer, search, inspector, focus, filters complete.
-- [ ] Overview/Standard/Detailed/Ecore modes complete.
-- [ ] Pan/zoom/Fit/minimap/manual movement/re-layout complete.
-- [ ] Theme/preferences complete without persisting source content.
-- [ ] SVG/PNG export workflow complete.
-- [ ] Keyboard/accessibility gate complete.
-- [ ] Large-model UX reviewed against performance baselines.
-- [ ] CI/build/E2E/deployment smoke tests green.
-- [ ] P0/P1 requirements and release Definition of Done satisfied.
+- [x] File-open and error recovery UX complete.
+- [x] Explorer, search, inspector, focus, filters complete.
+- [x] Overview/Standard/Detailed/Ecore modes complete.
+- [x] Pan/zoom/Fit/minimap/manual movement/re-layout complete.
+- [x] Theme/preferences complete without persisting source content.
+- [x] SVG/PNG export workflow complete.
+- [x] Keyboard/accessibility gate complete.
+- [x] Large-model UX reviewed against performance baselines.
+- [x] CI/build/E2E/deployment smoke tests green.
+- [x] P0/P1 requirements and release Definition of Done satisfied.
