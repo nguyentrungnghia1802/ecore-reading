@@ -1,9 +1,11 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import { DiagramCanvas, selectionForSemanticIds, type SemanticSelection } from '../renderer';
+import { buildSearchIndex, type SearchIndexItem } from '../search/search-index';
 import { EmptyState } from './components/EmptyState';
 import { ErrorState } from './components/ErrorState';
 import { LoadingState } from './components/LoadingState';
 import { ModelExplorer } from './components/ModelExplorer';
+import { SearchDialog } from './components/SearchDialog';
 import { WorkspaceHeader } from './components/WorkspaceHeader';
 import { WorkspaceStatusBar } from './components/WorkspaceStatusBar';
 import {
@@ -16,6 +18,11 @@ export function App() {
   const [workspace, setWorkspace] = useState<WorkspaceState>(createEmptyWorkspace);
   const [selection, setSelection] = useState<SemanticSelection | null>(null);
   const [isExplorerOpen, setIsExplorerOpen] = useState(true);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const searchIndexItems = useMemo(() => {
+    return workspace.status === 'ready' ? buildSearchIndex(workspace.model) : [];
+  }, [workspace]);
 
   const handleOpenFile = useCallback(async (file: File) => {
     setWorkspace({
@@ -98,6 +105,31 @@ export function App() {
     };
   }, [handleOpenFile]);
 
+  const handleSelectSearchResult = useCallback((item: SearchIndexItem) => {
+    if (
+      item.kind === 'attribute' ||
+      item.kind === 'reference' ||
+      item.kind === 'operation' ||
+      item.kind === 'literal'
+    ) {
+      setSelection(selectionForSemanticIds('row', [item.id]));
+    } else if (item.kind === 'class' || item.kind === 'enum' || item.kind === 'datatype') {
+      setSelection(selectionForSemanticIds('node', [item.id]));
+    }
+  }, []);
+
+  // Global Ctrl/Cmd + K shortcut for search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsSearchOpen((open) => !open);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <div className="workspace-app" data-testid="workspace-app">
       {workspace.status === 'empty' && (
@@ -133,6 +165,9 @@ export function App() {
             onOpenFile={(file) => {
               void handleOpenFile(file);
             }}
+            onOpenSearch={() => {
+              setIsSearchOpen(true);
+            }}
           />
 
           <main className="workspace-main">
@@ -158,6 +193,13 @@ export function App() {
           </main>
 
           <WorkspaceStatusBar model={workspace.model} />
+
+          <SearchDialog
+            index={searchIndexItems}
+            isOpen={isSearchOpen}
+            onClose={() => setIsSearchOpen(false)}
+            onSelect={handleSelectSearchResult}
+          />
         </div>
       )}
     </div>

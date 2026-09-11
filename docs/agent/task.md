@@ -781,21 +781,23 @@ feat: add ecore model explorer
 
 ### Checklist
 
-- [ ] Build a pure search index from EcoreModel.
-- [ ] Index package/classifier/attribute/reference/operation/enum-literal fields.
-- [ ] Implement ranking: exact classifier > prefix classifier > classifier substring > feature match > metadata.
-- [ ] Add `Ctrl/Cmd+K` search opening.
-- [ ] Show result kind and semantic context.
-- [ ] Selecting classifier centers/selects node.
-- [ ] Selecting feature selects owner node and inspector feature target.
-- [ ] Reveal a filtered-out target only through explicit predictable rule and indicate filter change if required.
-- [ ] Add tests for duplicate names, case behavior, exact/prefix ranking, and feature navigation.
+- [x] Build a pure search index from EcoreModel.
+- [x] Index package/classifier/attribute/reference/operation/enum-literal fields.
+- [x] Implement ranking: exact classifier > prefix classifier > classifier substring > feature match > metadata.
+- [x] Add `Ctrl/Cmd+K` search opening.
+- [x] Show result kind and semantic context.
+- [x] Selecting classifier centers/selects node.
+- [x] Selecting feature selects owner node and inspector feature target.
+- [x] Reveal a filtered-out target only through explicit predictable rule and indicate filter change if required.
+- [x] Add tests for duplicate names, case behavior, exact/prefix ranking, and feature navigation.
 
 ### Acceptance
 
-- [ ] Search on stress model remains responsive.
-- [ ] Result selection never relies on display name alone.
-- [ ] Search interaction has keyboard-only Playwright coverage.
+- [x] Search on stress model remains responsive.
+- [x] Result selection never relies on display name alone.
+- [x] Search interaction has keyboard-only Playwright coverage.
+
+Completion note (2026-09-12): P2-03 pure search index and ranking, Ctrl+K shortcut, SearchDialog palette, jump selection, unit tests (6 tests), and keyboard-only Playwright E2E tests passed.
 
 ### Commit
 

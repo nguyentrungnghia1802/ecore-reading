@@ -3,10 +3,11 @@ import type { ChangeEvent, ReactNode } from 'react';
 interface WorkspaceHeaderProps {
   sourceName: string;
   onOpenFile: (file: File) => void;
+  onOpenSearch?: () => void;
   children?: ReactNode;
 }
 
-export function WorkspaceHeader({ sourceName, onOpenFile, children }: WorkspaceHeaderProps) {
+export function WorkspaceHeader({ sourceName, onOpenFile, onOpenSearch, children }: WorkspaceHeaderProps) {
   const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -42,6 +43,23 @@ export function WorkspaceHeader({ sourceName, onOpenFile, children }: WorkspaceH
             data-testid="header-file-input"
           />
         </label>
+
+        {onOpenSearch && (
+          <button
+            type="button"
+            className="btn-icon-text"
+            onClick={onOpenSearch}
+            data-testid="open-search"
+            title="Search metamodel (Ctrl+K)"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <span>Search</span>
+            <kbd className="search-dialog__kbd">⌘K</kbd>
+          </button>
+        )}
       </div>
 
       <div className="workspace-header__center">
