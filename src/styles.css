@@ -324,6 +324,41 @@ main:not(.workspace-main) {
   box-shadow: none;
 }
 
+/* Canvas Controls & Minimap */
+.canvas-minimap {
+  background-color: var(--bg-surface) !important;
+  border: 1px solid var(--border-medium) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  bottom: 16px !important;
+  right: 16px !important;
+}
+
+.canvas-controls {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid var(--border-medium) !important;
+  overflow: hidden;
+  background: var(--bg-surface) !important;
+}
+
+.canvas-controls .react-flow__controls-button {
+  background-color: var(--bg-surface) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+  fill: var(--text-primary) !important;
+  transition: background-color 120ms ease;
+}
+
+.canvas-controls .react-flow__controls-button:hover {
+  background-color: var(--bg-subtle) !important;
+}
+
+.canvas-controls .react-flow__controls-button:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+}
+
 /* ==========================================================================
    Header Component
    ========================================================================== */

@@ -965,21 +965,23 @@ feat: add semantic diagram filters
 
 ### Checklist
 
-- [ ] Add React Flow Controls or project-owned equivalent for zoom in/out and Fit View.
-- [ ] Add pannable/zoomable MiniMap for large graph orientation.
-- [ ] Tune wheel/pan interaction for design-tool-like behavior and document chosen config.
-- [ ] Implement manual node position overrides as view state only.
-- [ ] Auto Layout clears/recomputes manual overrides intentionally.
-- [ ] Selection/inspector toggles preserve viewport and node positions.
-- [ ] Detail/filter re-layout attempts to keep selected node near previous viewport center.
-- [ ] Add Fit View shortcut `F` scoped safely to canvas.
-- [ ] Add E2E tests for manual move followed by re-layout and for minimap presence on loaded workspace.
+- [x] Add React Flow Controls or project-owned equivalent for zoom in/out and Fit View.
+- [x] Add pannable/zoomable MiniMap for large graph orientation.
+- [x] Tune wheel/pan interaction for design-tool-like behavior and document chosen config.
+- [x] Implement manual node position overrides as view state only.
+- [x] Auto Layout clears/recomputes manual overrides intentionally.
+- [x] Selection/inspector toggles preserve viewport and node positions.
+- [x] Detail/filter re-layout attempts to keep selected node near previous viewport center.
+- [x] Add Fit View shortcut `F` scoped safely to canvas.
+- [x] Add E2E tests for manual move followed by re-layout and for minimap presence on loaded workspace.
 
 ### Acceptance
 
-- [ ] No manual movement mutates EcoreModel/DiagramModel semantics.
-- [ ] Fit View reliably frames visible graph.
-- [ ] Sidebars toggling does not unexpectedly recompute layout.
+- [x] No manual movement mutates EcoreModel/DiagramModel semantics.
+- [x] Fit View reliably frames visible graph.
+- [x] Sidebars toggling does not unexpectedly recompute layout.
+
+Completion note (2026-09-12): P2-08 viewport interactions and controls completed with design-tool wheel/pan tuning, React Flow Controls (zoom in/out, fit view, custom reset layout button, minimap toggle), pannable/zoomable MiniMap with semantic node color coding, view-only manual drag position overrides with auto layout reset, selected node centering upon re-layout, keyboard shortcut 'F' for canvas fit view, and Playwright E2E suite (4 tests) passed.
 
 ### Commit
 
