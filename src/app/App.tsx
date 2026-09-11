@@ -1,5 +1,10 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import {
+  DEFAULT_DIAGRAM_FILTER,
+  applyDiagramFilters,
+  type DiagramFilterOptions,
+} from '../diagram/filter/diagram-filter';
+import {
   applyNeighborhoodFocus,
   computeNeighborhoodFocus,
   type FocusDepth,
@@ -13,6 +18,7 @@ import { buildSearchIndex, type SearchIndexItem } from '../search/search-index';
 import { DetailModeSelector } from './components/DetailModeSelector';
 import { EmptyState } from './components/EmptyState';
 import { ErrorState } from './components/ErrorState';
+import { FilterControls } from './components/FilterControls';
 import { FocusControls } from './components/FocusControls';
 import { Inspector } from './components/Inspector';
 import { LoadingState } from './components/LoadingState';
@@ -30,6 +36,8 @@ export function App() {
   const [workspace, setWorkspace] = useState<WorkspaceState>(createEmptyWorkspace);
   const [selection, setSelection] = useState<SemanticSelection | null>(null);
   const [focusState, setFocusState] = useState<{ rootSemanticId: string; depth: FocusDepth } | null>(null);
+  const [filters, setFilters] = useState<DiagramFilterOptions>(DEFAULT_DIAGRAM_FILTER);
+  const [filterNotice, setFilterNotice] = useState<string | null>(null);
   const [isExplorerOpen, setIsExplorerOpen] = useState(true);
   const [isInspectorOpen, setIsInspectorOpen] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -48,6 +56,7 @@ export function App() {
     });
     setSelection(null);
     setFocusState(null);
+    setFilterNotice(null);
 
     try {
       const text = await file.text();
@@ -75,6 +84,7 @@ export function App() {
     });
     setSelection(null);
     setFocusState(null);
+    setFilterNotice(null);
 
     try {
       const response = await fetch(`/tests/fixtures/ecore/${fixtureName}`);
@@ -100,6 +110,7 @@ export function App() {
     setWorkspace(createEmptyWorkspace());
     setSelection(null);
     setFocusState(null);
+    setFilterNotice(null);
   }, []);
 
   // Global drag-and-drop support when loaded
@@ -151,15 +162,17 @@ export function App() {
     async (
       options: DiagramOptions,
       focus: { rootSemanticId: string; depth: FocusDepth } | null,
+      currentFilters: DiagramFilterOptions,
     ) => {
       if (workspace.status !== 'ready') return;
       const baseDiagram = buildDiagram(workspace.model, options);
+      const filteredDiagram = applyDiagramFilters(baseDiagram, currentFilters);
       const focusedDiagram = focus
         ? applyNeighborhoodFocus(
-            baseDiagram,
-            computeNeighborhoodFocus(baseDiagram, focus.rootSemanticId, { depth: focus.depth }),
+            filteredDiagram,
+            computeNeighborhoodFocus(filteredDiagram, focus.rootSemanticId, { depth: focus.depth }),
           )
-        : baseDiagram;
+        : filteredDiagram;
       const newSized = sizeDiagram(focusedDiagram);
       const newLayout = await layoutSizedDiagram(
         newSized,
@@ -184,25 +197,79 @@ export function App() {
       if (workspace.status !== 'ready') return;
       const nextFocus = { rootSemanticId: semanticId, depth };
       setFocusState(nextFocus);
-      await relayoutDiagram(workspace.options, nextFocus);
+      await relayoutDiagram(workspace.options, nextFocus, filters);
     },
-    [workspace, relayoutDiagram],
+    [workspace, filters, relayoutDiagram],
   );
 
   const handleClearFocus = useCallback(async () => {
     if (workspace.status !== 'ready') return;
     setFocusState(null);
-    await relayoutDiagram(workspace.options, null);
-  }, [workspace, relayoutDiagram]);
+    await relayoutDiagram(workspace.options, null, filters);
+  }, [workspace, filters, relayoutDiagram]);
 
   const handleModeChange = useCallback(
     async (newMode: DiagramDetailMode) => {
       if (workspace.status !== 'ready' || workspace.options.detailMode === newMode) return;
       const newOptions = { ...workspace.options, detailMode: newMode };
-      await relayoutDiagram(newOptions, focusState);
+      await relayoutDiagram(newOptions, focusState, filters);
     },
-    [workspace, focusState, relayoutDiagram],
+    [workspace, focusState, filters, relayoutDiagram],
   );
+
+  const handleFiltersChange = useCallback(
+    async (newFilters: DiagramFilterOptions) => {
+      if (workspace.status !== 'ready') return;
+      setFilters(newFilters);
+
+      // Check if current selection would be filtered out
+      if (selection) {
+        const baseDiagram = buildDiagram(workspace.model, workspace.options);
+        const filteredDiagram = applyDiagramFilters(baseDiagram, newFilters);
+        const isNodeVisible = filteredDiagram.nodes.some(
+          (n) =>
+            selection.semanticIds.includes(n.id) ||
+            selection.semanticIds.includes(n.semanticId),
+        );
+        const isRelationVisible = filteredDiagram.relations.some((r) =>
+          selection.semanticIds.some((id) => r.semanticIds.includes(id)),
+        );
+        if (!isNodeVisible && !isRelationVisible) {
+          setSelection(null);
+          setFilterNotice('The selected element is now hidden by active diagram filters.');
+        }
+      }
+
+      // Check if current focus root would be filtered out
+      let nextFocus = focusState;
+      if (focusState) {
+        const baseDiagram = buildDiagram(workspace.model, workspace.options);
+        const filteredDiagram = applyDiagramFilters(baseDiagram, newFilters);
+        const isFocusRootVisible = filteredDiagram.nodes.some(
+          (n) =>
+            n.id === focusState.rootSemanticId ||
+            n.semanticId === focusState.rootSemanticId,
+        );
+        if (!isFocusRootVisible) {
+          nextFocus = null;
+          setFocusState(null);
+          setFilterNotice(
+            'Neighborhood focus was cleared because the focused element is hidden by active diagram filters.',
+          );
+        }
+      }
+
+      await relayoutDiagram(workspace.options, nextFocus, newFilters);
+    },
+    [workspace, selection, focusState, relayoutDiagram],
+  );
+
+  const handleResetFilters = useCallback(async () => {
+    if (workspace.status !== 'ready') return;
+    setFilters(DEFAULT_DIAGRAM_FILTER);
+    setFilterNotice(null);
+    await relayoutDiagram(workspace.options, focusState, DEFAULT_DIAGRAM_FILTER);
+  }, [workspace, focusState, relayoutDiagram]);
 
   return (
     <div className="workspace-app" data-testid="workspace-app">
@@ -270,7 +337,35 @@ export function App() {
                 void handleClearFocus();
               }}
             />
+            <FilterControls
+              filters={filters}
+              onChangeFilters={(f) => {
+                void handleFiltersChange(f);
+              }}
+              onResetFilters={() => {
+                void handleResetFilters();
+              }}
+            />
           </WorkspaceHeader>
+
+          {filterNotice && (
+            <div className="filter-notice-banner" data-testid="filter-notice" role="status">
+              <div className="filter-notice-banner__text">
+                <span aria-hidden="true">⚠️</span>
+                <span>{filterNotice}</span>
+              </div>
+              <button
+                type="button"
+                className="filter-notice-banner__btn"
+                data-testid="filter-notice-reset"
+                onClick={() => {
+                  void handleResetFilters();
+                }}
+              >
+                Reset Filters
+              </button>
+            </div>
+          )}
 
           <main className="workspace-main">
             <ModelExplorer

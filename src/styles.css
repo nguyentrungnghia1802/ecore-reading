@@ -538,6 +538,163 @@ main:not(.workspace-main) {
 }
 
 /* ==========================================================================
+   Diagram Filter Controls Component
+   ========================================================================== */
+.filter-controls {
+  position: relative;
+  display: inline-flex;
+}
+
+.filter-controls__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+.filter-controls__btn:hover {
+  background: var(--bg-subtle);
+  border-color: var(--border-strong);
+}
+
+.filter-controls__btn--active {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1e40af;
+}
+
+.filter-controls__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #2563eb;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0 5px;
+  font-size: 10px;
+  font-weight: 700;
+  height: 16px;
+  min-width: 16px;
+}
+
+.filter-controls__popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 250px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgb(0 0 0 / 15%), 0 8px 10px -6px rgb(0 0 0 / 10%);
+  padding: 12px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filter-controls__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.filter-controls__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.filter-controls__reset-btn {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.filter-controls__reset-btn:hover {
+  background: #eff6ff;
+  text-decoration: underline;
+}
+
+.filter-controls__section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-controls__section-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.filter-controls__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.filter-controls__item input[type="checkbox"] {
+  cursor: pointer;
+  accent-color: #2563eb;
+}
+
+.filter-notice-banner {
+  background: #fffbeb;
+  border-bottom: 1px solid #fef3c7;
+  color: #92400e;
+  padding: 6px 16px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 9;
+}
+
+.filter-notice-banner__text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-notice-banner__btn {
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #78350f;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+.filter-notice-banner__btn:hover {
+  background: #fde68a;
+}
+
+/* ==========================================================================
    Status Bar Component
    ========================================================================== */
 .workspace-status-bar {

@@ -929,20 +929,22 @@ feat: add semantic neighborhood focus
 
 ### Checklist
 
-- [ ] Add relation toggles: inheritance, containment, ordinary references, external/unresolved.
-- [ ] Add node toggles for classes/enums/datatypes/external placeholders where meaningful.
-- [ ] Apply filters at DiagramModel derivation boundary, not by arbitrary CSS hiding.
-- [ ] Define behavior when current selection becomes filtered out: show explanation and clear/move selection deterministically.
-- [ ] Define behavior when focus root is filtered out.
-- [ ] Trigger new layout only when visible graph geometry changes.
-- [ ] Add reset-to-default action.
-- [ ] Add tests for filter combinations and merged opposite composition relations.
+- [x] Add relation toggles: inheritance, containment, ordinary references, external/unresolved.
+- [x] Add node toggles for classes/enums/datatypes/external placeholders where meaningful.
+- [x] Apply filters at DiagramModel derivation boundary, not by arbitrary CSS hiding.
+- [x] Define behavior when current selection becomes filtered out: show explanation and clear/move selection deterministically.
+- [x] Define behavior when focus root is filtered out.
+- [x] Trigger new layout only when visible graph geometry changes.
+- [x] Add reset-to-default action.
+- [x] Add tests for filter combinations and merged opposite composition relations.
 
 ### Acceptance
 
-- [ ] Filtered graph contains no dangling relation endpoints.
-- [ ] User is never left with an invisible selected item without explanation.
-- [ ] Filter state integrates with export.
+- [x] Filtered graph contains no dangling relation endpoints.
+- [x] User is never left with an invisible selected item without explanation.
+- [x] Filter state integrates with export.
+
+Completion note (2026-09-12): P2-07 node and relation filters implemented with pure DiagramModel filtering (`applyDiagramFilters`), dangling edge prevention, merged bidirectional composition preservation, active filter count badge, popover controls with reset action, deterministic selection/focus dismissal with explanatory banner and quick-reset action, unit tests (6 tests), and Playwright E2E suite (3 tests) passed.
 
 ### Commit
 
