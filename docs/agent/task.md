@@ -407,30 +407,32 @@ buildDiagram(model: EcoreModel, options: DiagramOptions): DiagramModel
 
 ### Checklist
 
-- [ ] Define `DiagramOptions` for detail mode, visible relation kinds, external-placeholder policy, and focus subset input.
-- [ ] Add mapper tests directly from small semantic-model objects; do not require XML for every case.
-- [ ] Map each EClass/EEnum/user EDataType to the correct node kind/stereotype.
-- [ ] Map every local inheritance relation with subclass → superclass semantics.
-- [ ] Map one-way EReference with explicit navigability and target multiplicity.
-- [ ] Merge valid eOpposite pairs into one DiagramRelation while storing both EReference semantic IDs.
-- [ ] Map containment to composition with diamond metadata at the container/source end.
-- [ ] When a valid opposite pair contains exactly one containment reference, canonicalize relation orientation so the containing EClass is always `sourceNodeId` regardless of source declaration order.
-- [ ] Combine inverse container reference role/multiplicity on the same composition relation.
-- [ ] Keep parallel non-opposite references as unique relations.
-- [ ] Map self references without collapsing relation identity.
-- [ ] Create external/unresolved placeholder/relation only according to options and label it explicitly.
-- [ ] Implement Overview/Standard/Detailed/Ecore node-row builders as pure functions.
-- [ ] Ensure Ecore mode can expose owned references even when UML mode represents them primarily as edges.
-- [ ] Retain semantic IDs on every node, row, badge, and relation needed by inspector/selection.
-- [ ] Add mapper invariant checker used by tests/development.
+- [x] Define `DiagramOptions` for detail mode, visible relation kinds, external-placeholder policy, and focus subset input.
+- [x] Add mapper tests directly from small semantic-model objects; do not require XML for every case.
+- [x] Map each EClass/EEnum/user EDataType to the correct node kind/stereotype.
+- [x] Map every local inheritance relation with subclass → superclass semantics.
+- [x] Map one-way EReference with explicit navigability and target multiplicity.
+- [x] Merge valid eOpposite pairs into one DiagramRelation while storing both EReference semantic IDs.
+- [x] Map containment to composition with diamond metadata at the container/source end.
+- [x] When a valid opposite pair contains exactly one containment reference, canonicalize relation orientation so the containing EClass is always `sourceNodeId` regardless of source declaration order.
+- [x] Combine inverse container reference role/multiplicity on the same composition relation.
+- [x] Keep parallel non-opposite references as unique relations.
+- [x] Map self references without collapsing relation identity.
+- [x] Create external/unresolved placeholder/relation only according to options and label it explicitly.
+- [x] Implement Overview/Standard/Detailed/Ecore node-row builders as pure functions.
+- [x] Ensure Ecore mode can expose owned references even when UML mode represents them primarily as edges.
+- [x] Retain semantic IDs on every node, row, badge, and relation needed by inspector/selection.
+- [x] Add mapper invariant checker used by tests/development.
 
 ### Acceptance
 
-- [ ] DiagramModel imports no React Flow/ELK types.
-- [ ] Same EcoreModel/options produce deep-equal DiagramModel.
-- [ ] All notation cases in `07-diagram-notation.md` have tests.
-- [ ] Multiplicity endpoint tests explicitly verify source vs target placement.
-- [ ] Full typecheck/lint/unit suite passes.
+- [x] DiagramModel imports no React Flow/ELK types.
+- [x] Same EcoreModel/options produce deep-equal DiagramModel.
+- [x] All notation cases in `07-diagram-notation.md` have tests.
+- [x] Multiplicity endpoint tests explicitly verify source vs target placement.
+- [x] Full typecheck/lint/unit suite passes.
+
+Completion note (2026-09-11): diagram mapper suite (9 tests), full unit suite (94 tests), typecheck, and lint passed.
 
 ### Commit
 
