@@ -76,14 +76,14 @@ export function ExportHarness() {
       <p style={{ margin: '0 0 16px' }}>{fixture}</p>
       <div
         data-testid="canvas-svg-comparison"
-        style={{ display: 'grid', gap: 20, gridTemplateColumns: '1fr 1fr' }}
+        style={{ display: 'grid', gap: 20, gridTemplateColumns: '1fr 1fr', height: 750 }}
       >
         <section style={{ minWidth: 0 }}>
-          <h2 style={{ fontSize: 16 }}>React Flow canvas</h2>
+          <h2 style={{ fontSize: 16, height: 20, lineHeight: '20px', margin: '0 0 10px' }}>React Flow canvas</h2>
           <DiagramCanvas layout={result.layout} />
         </section>
         <section style={{ minWidth: 0 }}>
-          <h2 style={{ fontSize: 16 }}>Standalone vector SVG</h2>
+          <h2 style={{ fontSize: 16, height: 20, lineHeight: '20px', margin: '0 0 10px' }}>Standalone vector SVG</h2>
           <div
             data-testid="svg-export-preview"
             style={{
