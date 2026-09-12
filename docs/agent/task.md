@@ -1172,8 +1172,8 @@ Run at minimum:
 npm ci
 npm run typecheck
 npm run lint
-npm test -- --run
 npm run build
+npm test -- --run
 npm run test:e2e
 ```
 

@@ -1,10 +1,17 @@
+import { execSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 
 describe('Production build and static deployment verification', () => {
   const distDir = resolve(process.cwd(), 'dist');
   const indexHtmlPath = resolve(distDir, 'index.html');
+
+  beforeAll(() => {
+    if (!existsSync(indexHtmlPath)) {
+      execSync('npm run build', { stdio: 'pipe' });
+    }
+  }, 60_000);
 
   it('produces valid static distribution bundle', () => {
     expect(existsSync(indexHtmlPath), 'dist/index.html must exist after build').toBe(true);
