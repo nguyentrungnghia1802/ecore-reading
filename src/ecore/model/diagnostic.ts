@@ -6,6 +6,9 @@ export interface Diagnostic {
   severity: DiagnosticSeverity;
   message: string;
   semanticId?: string;
+  sourceElementId?: string;
+  relatedElementIds?: string[];
   rawReference?: string;
   path?: string;
+  details?: Readonly<Record<string, unknown>>;
 }

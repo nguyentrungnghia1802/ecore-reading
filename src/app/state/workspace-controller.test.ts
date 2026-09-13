@@ -6,6 +6,19 @@ import { loadEcoreDocument } from './workspace-controller';
 const fixtureDir = resolve(process.cwd(), 'tests/fixtures/ecore');
 
 describe('workspace-controller', () => {
+  it('keeps a renderable semantic-error model ready for analysis', async () => {
+    const xml = `<e:EPackage xmlns:e="http://www.eclipse.org/emf/2002/Ecore" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="p">
+      <eClassifiers xsi:type="e:EClass" name="Auction">
+        <eStructuralFeatures xsi:type="e:EReference" name="bidder" eType="#//BidderX"/>
+      </eClassifiers>
+    </e:EPackage>`;
+    const result = await loadEcoreDocument(xml, 'invalid.ecore');
+    expect(result.status).toBe('ready');
+    if (result.status === 'ready') {
+      expect(result.model.diagnostics[0]?.code).toBe('ECORE_UNRESOLVED_LOCAL_REFERENCE');
+      expect(result.layout.nodes).toHaveLength(1);
+    }
+  });
   it('loads valid Ecore document and transitions to ready state', async () => {
     const xml = await readFile(resolve(fixtureDir, 'all-features.ecore'), 'utf8');
     const result = await loadEcoreDocument(xml, 'all-features.ecore');

@@ -10,7 +10,8 @@ import {
   type NodeTypes,
 } from '@xyflow/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { LayoutModel } from '../../layout/model';
+import type { LayoutModel, Point } from '../../layout/model';
+import { computeDynamicEdgeSections } from '../edges/edge-geometry';
 import { SemanticEdge } from '../edges/SemanticEdge';
 import { UmlNode } from '../nodes/UmlNode';
 import {
@@ -42,6 +43,10 @@ export interface DiagramCanvasProps {
   onResetLayout?: () => void;
   minimapVisible?: boolean;
   onToggleMinimap?: (visible: boolean) => void;
+  highlightedNodeIds?: readonly string[] | undefined;
+  highlightedRelationIds?: readonly string[] | undefined;
+  focusNodeIds?: readonly string[] | undefined;
+  focusKey?: number | undefined;
 }
 
 function DiagramCanvasInner({
@@ -52,6 +57,10 @@ function DiagramCanvasInner({
   onResetLayout,
   minimapVisible,
   onToggleMinimap,
+  highlightedNodeIds,
+  highlightedRelationIds,
+  focusNodeIds,
+  focusKey,
 }: DiagramCanvasProps) {
   const { fitView, setCenter, getZoom } = useReactFlow();
   const [localSelection, setLocalSelection] = useState<SemanticSelection | null>(null);
@@ -123,14 +132,40 @@ function DiagramCanvasInner({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [fitView]);
 
+  useEffect(() => {
+    if (!focusNodeIds || focusNodeIds.length === 0) return;
+    const targetNodes = layout.nodes.filter(
+      (n) => focusNodeIds.includes(n.id) || focusNodeIds.includes(n.semanticId),
+    );
+    if (targetNodes.length === 0) return;
+
+    if (targetNodes.length === 1) {
+      const target = targetNodes[0]!;
+      const currentZoom = getZoom();
+      void setCenter(
+        target.position.x + target.size.width / 2,
+        target.position.y + target.size.height / 2,
+        { duration: 300, zoom: Math.max(currentZoom, 0.75) },
+      );
+    } else {
+      void fitView({
+        nodes: targetNodes.map((n) => ({ id: n.id })),
+        padding: 0.25,
+        duration: 300,
+      });
+    }
+  }, [focusKey, focusNodeIds, layout.nodes, getZoom, setCenter, fitView]);
+
   const baseElements = useMemo(
     () =>
       toReactFlowElements(layout, {
         selection: activeSelection,
+        highlightedNodeIds,
+        highlightedRelationIds,
         onSelectRow: (semanticId) => publishSelection(selectionForSemanticIds('row', [semanticId])),
         onSelectEdge: (semanticIds) => publishSelection(selectionForSemanticIds('relation', semanticIds)),
       }),
-    [activeSelection, layout, publishSelection],
+    [activeSelection, highlightedNodeIds, highlightedRelationIds, layout, publishSelection],
   );
 
   // Merge manual position overrides as view-only state (semantics and layout model untouched)
@@ -138,11 +173,41 @@ function DiagramCanvasInner({
     const overrideKeys = Object.keys(manualOverrides);
     if (overrideKeys.length === 0) return baseElements;
 
+    const currentPositions = new Map<string, Point>();
+    for (const node of baseElements.nodes) {
+      currentPositions.set(node.id, manualOverrides[node.id] ?? node.position);
+    }
+
     return {
-      ...baseElements,
       nodes: baseElements.nodes.map((node) => {
         const override = manualOverrides[node.id];
         return override ? { ...node, position: { ...override } } : node;
+      }),
+      edges: baseElements.edges.map((edge) => {
+        const edgeData = edge.data;
+        if (edgeData?.sourceNode === undefined || edgeData.targetNode === undefined) return edge;
+
+        const currentSourcePos = currentPositions.get(edge.source) ?? edgeData.sourceNode.position;
+        const currentTargetPos = currentPositions.get(edge.target) ?? edgeData.targetNode.position;
+
+        const updatedSections = computeDynamicEdgeSections({
+          relation: edgeData.relation,
+          sourceNode: edgeData.sourceNode,
+          targetNode: edgeData.targetNode,
+          currentSourcePos,
+          currentTargetPos,
+        });
+
+        return {
+          ...edge,
+          data: {
+            ...edgeData,
+            relation: {
+              ...edgeData.relation,
+              sections: updatedSections,
+            },
+          },
+        };
       }),
     };
   }, [baseElements, manualOverrides]);
@@ -152,6 +217,17 @@ function DiagramCanvasInner({
       publishSelection(selectionForSemanticIds('node', [node.data.semanticId]));
     },
     [publishSelection],
+  );
+
+
+  const handleNodeDrag = useCallback(
+    (_event: MouseEvent | TouchEvent, node: UmlFlowNode) => {
+      setManualOverrides((prev) => ({
+        ...prev,
+        [node.id]: { x: node.position.x, y: node.position.y },
+      }));
+    },
+    [],
   );
 
   const handleNodeDragStop = useCallback(
@@ -229,6 +305,7 @@ function DiagramCanvasInner({
           setIsLowZoom((prev) => (prev !== nextLow ? nextLow : prev));
         }}
         onNodeClick={handleNodeClick}
+        onNodeDrag={handleNodeDrag}
         onNodeDragStop={handleNodeDragStop}
         onPaneClick={() => publishSelection(null)}
         onSelectionChange={handleFlowSelectionChange}

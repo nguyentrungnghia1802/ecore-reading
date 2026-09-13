@@ -13,6 +13,7 @@ function invalidOpposite(
   reason: string,
   diagnostics: Diagnostic[],
   reported: Set<string>,
+  candidateId?: string,
 ): void {
   if (reported.has(reference.id)) return;
   reported.add(reference.id);
@@ -22,6 +23,7 @@ function invalidOpposite(
     severity: 'error',
     message: `Reference ${reference.name} declares opposite "${reference.rawOpposite ?? ''}", but ${reason}. The references remain separate.`,
     semanticId: reference.id,
+    ...(candidateId === undefined ? {} : { relatedElementIds: [candidateId] }),
     ...(reference.rawOpposite === undefined ? {} : { rawReference: reference.rawOpposite }),
     path: reference.source.path,
   });
@@ -57,28 +59,28 @@ export function resolveAndValidateOpposites(
     }
     const candidate = featureById.get(target.id);
     if (candidate?.kind !== 'reference') {
-      invalidOpposite(feature, 'the target is not an EReference', diagnostics, reported);
+      invalidOpposite(feature, 'the target is not an EReference', diagnostics, reported, candidate?.id);
       continue;
     }
     if (candidate.id === feature.id) {
-      invalidOpposite(feature, 'an eOpposite must reference a distinct EReference', diagnostics, reported);
+      invalidOpposite(feature, 'an eOpposite must reference a distinct EReference', diagnostics, reported, candidate.id);
       continue;
     }
     if (!isEndpointCompatible(feature, candidate)) {
-      invalidOpposite(feature, 'the owner and target endpoints are incompatible', diagnostics, reported);
+      invalidOpposite(feature, 'the owner and target endpoints are incompatible', diagnostics, reported, candidate.id);
       continue;
     }
     if (feature.containment && candidate.containment) {
-      invalidOpposite(feature, 'both ends declare containment', diagnostics, reported);
+      invalidOpposite(feature, 'both ends declare containment', diagnostics, reported, candidate.id);
       continue;
     }
     if (candidate.rawOpposite === undefined) {
-      invalidOpposite(feature, 'the reverse EReference does not declare eOpposite', diagnostics, reported);
+      invalidOpposite(feature, 'the reverse EReference does not declare eOpposite', diagnostics, reported, candidate.id);
       continue;
     }
     const reverse = resolveLocalRef(candidate.rawOpposite, localIndex).target;
     if (reverse?.id !== feature.id) {
-      invalidOpposite(feature, 'the reverse eOpposite does not point back to this reference', diagnostics, reported);
+      invalidOpposite(feature, 'the reverse eOpposite does not point back to this reference', diagnostics, reported, candidate.id);
       continue;
     }
     validOpposites.set(feature.id, candidate.id);

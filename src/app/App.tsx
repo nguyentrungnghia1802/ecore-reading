@@ -17,6 +17,7 @@ import { getLayoutProfile, layoutSizedDiagram } from '../layout';
 import { DiagramCanvas, selectionForSemanticIds, type SemanticSelection } from '../renderer';
 import { buildSearchIndex, type SearchIndexItem } from '../search/search-index';
 import { DetailModeSelector } from './components/DetailModeSelector';
+import { DiagnosticsPanel } from './components/DiagnosticsPanel';
 import { EmptyState } from './components/EmptyState';
 import { ErrorState } from './components/ErrorState';
 import { ExportDialog } from './components/ExportDialog';
@@ -40,6 +41,10 @@ import {
   createEmptyWorkspace,
   loadEcoreDocument,
 } from './state/workspace-controller';
+import {
+  resolveDiagnosticNavigation,
+  type DiagnosticNavigation,
+} from './state/diagnostic-navigation';
 import type { WorkspaceState } from './state/workspace-types';
 
 export function App() {
@@ -69,6 +74,10 @@ export function App() {
   const [isInspectorOpen, setIsInspectorOpen] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isExportOpen, setIsExportOpen] = useState(false);
+  const [isDiagnosticsOpen, setIsDiagnosticsOpen] = useState(false);
+  const [selectedDiagnosticId, setSelectedDiagnosticId] = useState<string | null>(null);
+  const [diagnosticNav, setDiagnosticNav] = useState<DiagnosticNavigation | null>(null);
+  const [diagnosticFocusKey, setDiagnosticFocusKey] = useState(0);
 
   const searchIndexItems = useMemo(() => {
     return workspace.status === 'ready' ? buildSearchIndex(workspace.model) : [];
@@ -92,6 +101,9 @@ export function App() {
         diagramOptions: { detailMode: preferences.detailMode },
       });
       setWorkspace(result);
+      if (result.status === 'ready' && result.model.diagnostics.length > 0) {
+        setIsDiagnosticsOpen(true);
+      }
     } catch (err: unknown) {
       setWorkspace({
         status: 'error',
@@ -126,6 +138,9 @@ export function App() {
         diagramOptions: { detailMode: preferences.detailMode },
       });
       setWorkspace(result);
+      if (result.status === 'ready' && result.model.diagnostics.length > 0) {
+        setIsDiagnosticsOpen(true);
+      }
     } catch (err: unknown) {
       setWorkspace({
         status: 'error',
@@ -143,6 +158,9 @@ export function App() {
     setSelection(null);
     setFocusState(null);
     setFilterNotice(null);
+    setIsDiagnosticsOpen(false);
+    setSelectedDiagnosticId(null);
+    setDiagnosticNav(null);
   }, []);
 
   // Global drag-and-drop support when loaded
@@ -176,6 +194,32 @@ export function App() {
     } else if (item.kind === 'class' || item.kind === 'enum' || item.kind === 'datatype') {
       setSelection(selectionForSemanticIds('node', [item.id]));
     }
+  }, []);
+
+  const handleSelectDiagnostic = useCallback(
+    (diagnosticId: string | null) => {
+      setSelectedDiagnosticId(diagnosticId);
+      if (diagnosticId === null || workspace.status !== 'ready') {
+        setDiagnosticNav(null);
+        return;
+      }
+      const diagnostic = workspace.model.diagnostics.find((d) => d.id === diagnosticId);
+      if (!diagnostic) {
+        setDiagnosticNav(null);
+        return;
+      }
+      const nav = resolveDiagnosticNavigation(diagnostic, workspace.model, workspace.layout);
+      setDiagnosticNav(nav);
+      if (nav.selection) {
+        setSelection(nav.selection);
+      }
+      setDiagnosticFocusKey((prev) => prev + 1);
+    },
+    [workspace],
+  );
+
+  const handleToggleDiagnostics = useCallback(() => {
+    setIsDiagnosticsOpen((prev) => !prev);
   }, []);
 
   // Global keyboard shortcuts (Ctrl+K for search, Ctrl+O for open, Escape to clear selection)
@@ -369,6 +413,9 @@ export function App() {
             onOpenExport={() => {
               setIsExportOpen(true);
             }}
+            diagnosticCount={workspace.model.diagnostics.length}
+            isDiagnosticsOpen={isDiagnosticsOpen}
+            onToggleDiagnostics={handleToggleDiagnostics}
           >
             <DetailModeSelector
               activeMode={workspace.options.detailMode}
@@ -445,15 +492,30 @@ export function App() {
             />
 
             <div className="workspace-canvas-container">
-              <DiagramCanvas
-                layout={workspace.layout}
-                selection={selection}
-                onSelectionChange={setSelection}
-                minimapVisible={preferences.minimapVisible}
-                onToggleMinimap={(visible) => {
-                  setPreferences((prev) => ({ ...prev, minimapVisible: visible }));
-                }}
-              />
+              <div className="workspace-canvas-wrapper">
+                <DiagramCanvas
+                  layout={workspace.layout}
+                  selection={selection}
+                  onSelectionChange={setSelection}
+                  highlightedNodeIds={diagnosticNav?.highlightedNodeIds}
+                  highlightedRelationIds={diagnosticNav?.highlightedRelationIds}
+                  focusNodeIds={diagnosticNav?.focusNodeIds}
+                  focusKey={diagnosticFocusKey}
+                  minimapVisible={preferences.minimapVisible}
+                  onToggleMinimap={(visible) => {
+                    setPreferences((prev) => ({ ...prev, minimapVisible: visible }));
+                  }}
+                />
+              </div>
+              {isDiagnosticsOpen && (
+                <DiagnosticsPanel
+                  diagnostics={workspace.model.diagnostics}
+                  selectedId={selectedDiagnosticId}
+                  onSelect={handleSelectDiagnostic}
+                  isOpen={isDiagnosticsOpen}
+                  onToggleOpen={handleToggleDiagnostics}
+                />
+              )}
             </div>
 
             <Inspector
@@ -473,7 +535,10 @@ export function App() {
             />
           </main>
 
-          <WorkspaceStatusBar model={workspace.model} />
+          <WorkspaceStatusBar
+            model={workspace.model}
+            onToggleDiagnostics={handleToggleDiagnostics}
+          />
 
           <SearchDialog
             index={searchIndexItems}

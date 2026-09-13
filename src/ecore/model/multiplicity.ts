@@ -58,6 +58,7 @@ export function normalizeMultiplicity(
             code: 'ECORE_INVALID_BOUNDS',
             severity: 'error',
             message: `Invalid Ecore bounds lower=${rawLower ?? '<default>'}, upper=${rawUpper ?? '<default>'}.`,
+            details: { lowerBound: rawLower ?? '<default>', upperBound: rawUpper ?? '<default>' },
             ...(path === undefined ? {} : { path }),
           },
         ]

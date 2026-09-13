@@ -364,6 +364,59 @@ export function buildEcoreModel(document: RawEcoreDocument): EcoreModel {
     ...state.classifiers.flatMap((item) => item.typeParameters),
     ...state.operations.flatMap((item) => item.typeParameters),
   ];
+  const classifierGroups = new Map<string, EcoreClassifier[]>();
+  for (const classifier of state.classifiers) {
+    const key = `${classifier.packageId}\u0000${classifier.name}`;
+    classifierGroups.set(key, [...(classifierGroups.get(key) ?? []), classifier]);
+  }
+  for (const group of classifierGroups.values()) {
+    if (group.length < 2) continue;
+    const first = group[0];
+    if (first === undefined) continue;
+    state.diagnostics.push({
+      id: `ECORE_DUPLICATE_CLASSIFIER:${first.packageId}:${first.name}`,
+      code: 'ECORE_DUPLICATE_CLASSIFIER',
+      severity: 'error',
+      message: `Classifier "${first.name}" is declared ${group.length} times in the same package; references by name are ambiguous.`,
+      semanticId: first.id,
+      relatedElementIds: group.slice(1).map((item) => item.id),
+      path: first.source.path,
+    });
+  }
+
+  const sourceIdByPath = new Map<string, string>();
+  const register = (id: string, path: string) => sourceIdByPath.set(path, id);
+  state.packages.forEach((item) => register(item.id, item.source.path));
+  state.classifiers.forEach((item) => {
+    register(item.id, item.source.path);
+    item.typeParameters.forEach((parameter) => register(parameter.id, parameter.source.path));
+    if (item.kind === 'enum') item.literals.forEach((literal) => register(literal.id, literal.source.path));
+  });
+  state.features.forEach((item) => register(item.id, item.source.path));
+  state.operations.forEach((item) => {
+    register(item.id, item.source.path);
+    item.parameters.forEach((parameter) => register(parameter.id, parameter.source.path));
+    item.typeParameters.forEach((parameter) => register(parameter.id, parameter.source.path));
+  });
+  const diagnosticIds = new Map<string, number>();
+  const diagnostics = state.diagnostics.map((diagnostic) => {
+    let path = diagnostic.path;
+    let sourceId: string | undefined;
+    while (path !== undefined && sourceId === undefined) {
+      sourceId = sourceIdByPath.get(path);
+      const slash = path.lastIndexOf('/');
+      path = slash > 0 ? path.slice(0, slash) : undefined;
+    }
+    const stableId = diagnostic.path === undefined ? diagnostic.id : `${diagnostic.id}:${diagnostic.path}`;
+    const occurrence = diagnosticIds.get(stableId) ?? 0;
+    diagnosticIds.set(stableId, occurrence + 1);
+    const effectiveSourceId = diagnostic.semanticId ?? sourceId;
+    return {
+      ...diagnostic,
+      id: occurrence === 0 ? stableId : `${stableId}:${occurrence}`,
+      ...(effectiveSourceId !== undefined ? { semanticId: effectiveSourceId, sourceElementId: effectiveSourceId } : {}),
+    };
+  });
   return {
     sourceName: document.sourceName,
     packages: state.packages,
@@ -376,6 +429,6 @@ export function buildEcoreModel(document: RawEcoreDocument): EcoreModel {
     operationById: new Map(state.operations.map((item) => [item.id, item])),
     parameterById: new Map(parameters.map((item) => [item.id, item])),
     typeParameterById: new Map(allTypeParameters.map((item) => [item.id, item])),
-    diagnostics: state.diagnostics,
+    diagnostics,
   };
 }

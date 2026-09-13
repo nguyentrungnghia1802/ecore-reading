@@ -49,4 +49,99 @@ describe('SemanticEdge', () => {
     expect(markup).toContain('documents 0..*');
     expect(markup).toContain('semantic-edge__path--selected');
   });
+
+  it('updates path and marker points dynamically when runtime coordinates move', () => {
+    // Simulate source handle moved from (10, 20) to (50, 60)
+    const markup = renderToStaticMarkup(
+      <svg>
+        <SemanticEdge
+          data={composition}
+          id="relation:composition"
+          selectable
+          source="node:Folder"
+          sourcePosition={Position.Right}
+          sourceX={50}
+          sourceY={60}
+          target="node:Document"
+          targetPosition={Position.Left}
+          targetX={120}
+          targetY={80}
+        />
+      </svg>,
+    );
+
+    // Path must start at (50, 60) and end at (120, 80)
+    expect(markup).toContain('M 50 60');
+    expect(markup).toContain('L 120 80');
+    // Diamond marker at source must anchor at (50, 60)
+    expect(markup).toContain('points="50,60');
+    // Navigable arrow at target must anchor at (120, 80)
+    expect(markup).toContain('points="120,80');
+  });
+
+  it('updates generalization triangle position dynamically when super-class moves', () => {
+    const generalizationData: SemanticEdgeData = {
+      semanticIds: ['class:Child', 'class:Parent'],
+      selectedState: 'normal',
+      relation: {
+        id: 'rel:gen',
+        kind: 'generalization',
+        sourceNodeId: 'node:Child',
+        targetNodeId: 'node:Parent',
+        semanticIds: ['class:Child', 'class:Parent'],
+        sections: [{ start: { x: 100, y: 200 }, bendPoints: [], end: { x: 100, y: 80 } }],
+      },
+    };
+
+    // Simulate Parent (target) dragged from y=80 to y=40, and x from 100 to 150
+    const markup = renderToStaticMarkup(
+      <svg>
+        <SemanticEdge
+          data={generalizationData}
+          id="rel:gen"
+          selectable
+          source="node:Child"
+          sourcePosition={Position.Top}
+          sourceX={100}
+          sourceY={200}
+          target="node:Parent"
+          targetPosition={Position.Bottom}
+          targetX={150}
+          targetY={40}
+        />
+      </svg>,
+    );
+
+    expect(markup).toContain('M 100 200');
+    expect(markup).toContain('L 150 40');
+    expect(markup).toContain('semantic-edge__marker--uml-hollow-triangle');
+    // Triangle tip must be anchored at target endpoint (150, 40)
+    expect(markup).toContain('points="150,40');
+  });
+
+  it('renders diagnostic highlight class when selectedState is diagnostic', () => {
+    const diagnosticData: SemanticEdgeData = {
+      ...composition,
+      selectedState: 'diagnostic',
+    };
+    const markup = renderToStaticMarkup(
+      <svg>
+        <SemanticEdge
+          data={diagnosticData}
+          id="relation:composition"
+          selectable
+          source="node:Folder"
+          sourcePosition={Position.Right}
+          sourceX={10}
+          sourceY={20}
+          target="node:Document"
+          targetPosition={Position.Left}
+          targetX={80}
+          targetY={20}
+        />
+      </svg>,
+    );
+    expect(markup).toContain('semantic-edge__path--diagnostic');
+  });
 });
+

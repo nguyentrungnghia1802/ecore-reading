@@ -6,10 +6,11 @@ import type {
   NodeTextLayout,
 } from '../../diagram/model';
 import { edgeAccessibleLabel } from '../../diagram/notation';
-import type { LayoutModel, LayoutRelation, Size } from '../../layout/model';
+import type { LayoutModel, LayoutRelation, Point, Size } from '../../layout/model';
+import { determinePortSide } from '../edges/edge-geometry';
 import type { SemanticSelection } from './selection-adapter';
 
-export type SelectionState = 'normal' | 'selected' | 'neighbor' | 'dimmed';
+export type SelectionState = 'normal' | 'selected' | 'neighbor' | 'dimmed' | 'diagnostic';
 
 export interface UmlNodeData extends Record<string, unknown> {
   semanticId: string;
@@ -30,6 +31,8 @@ export interface SemanticEdgeData extends Record<string, unknown> {
   semanticIds: string[];
   relation: LayoutRelation;
   selectedState: SelectionState;
+  sourceNode?: { position: Point; size: Size };
+  targetNode?: { position: Point; size: Size };
   onSelectEdge?: (semanticIds: string[]) => void;
 }
 
@@ -42,6 +45,8 @@ export interface ReactFlowElements {
 
 export interface ReactFlowAdapterOptions {
   selection: SemanticSelection | null;
+  highlightedNodeIds?: readonly string[] | undefined;
+  highlightedRelationIds?: readonly string[] | undefined;
   onSelectRow?: (semanticId: string) => void;
   onSelectEdge?: (semanticIds: string[]) => void;
 }
@@ -58,7 +63,16 @@ function nodeSemanticIds(node: LayoutModel['nodes'][number]): string[] {
   ];
 }
 
-function selectionStates(layout: LayoutModel, selection: SemanticSelection | null) {
+function selectionStates(
+  layout: LayoutModel,
+  selection: SemanticSelection | null,
+  highlightedNodeIds?: readonly string[],
+  highlightedRelationIds?: readonly string[],
+) {
+  const diagNodeIds = new Set(highlightedNodeIds ?? []);
+  const diagRelationIds = new Set(highlightedRelationIds ?? []);
+  const hasDiagnosticHighlight = diagNodeIds.size > 0 || diagRelationIds.size > 0;
+
   const selected = new Set(selection?.semanticIds ?? []);
   const hasSelection = selection !== null;
   const selectedNodeIds = new Set(
@@ -91,23 +105,40 @@ function selectionStates(layout: LayoutModel, selection: SemanticSelection | nul
     }
   }
 
-  return { hasSelection, neighborNodeIds, selectedNodeIds, selectedRelationIds };
+  return {
+    hasSelection,
+    neighborNodeIds,
+    selectedNodeIds,
+    selectedRelationIds,
+    diagNodeIds,
+    diagRelationIds,
+    hasDiagnosticHighlight,
+  };
 }
 
 export function toReactFlowElements(
   layout: LayoutModel,
   options: ReactFlowAdapterOptions,
 ): ReactFlowElements {
-  const states = selectionStates(layout, options.selection);
+  const states = selectionStates(
+    layout,
+    options.selection,
+    options.highlightedNodeIds,
+    options.highlightedRelationIds,
+  );
 
   const nodes = layout.nodes.map<UmlFlowNode>((node) => {
-    const selectedState: SelectionState = states.selectedNodeIds.has(node.id)
-      ? 'selected'
-      : states.neighborNodeIds.has(node.id)
-        ? 'neighbor'
-        : states.hasSelection
-          ? 'dimmed'
-          : 'normal';
+    const selectedState: SelectionState = states.diagNodeIds.has(node.id)
+      ? 'diagnostic'
+      : states.hasDiagnosticHighlight
+        ? 'dimmed'
+        : states.selectedNodeIds.has(node.id)
+          ? 'selected'
+          : states.neighborNodeIds.has(node.id)
+            ? 'neighbor'
+            : states.hasSelection
+              ? 'dimmed'
+              : 'normal';
 
     return {
       id: node.id,
@@ -143,21 +174,41 @@ export function toReactFlowElements(
     };
   });
 
+  const nodeMap = new Map(layout.nodes.map((node) => [node.id, node]));
+
   const edges = layout.relations.map<SemanticFlowEdge>((relation) => {
-    const selectedState: SelectionState = states.selectedRelationIds.has(relation.id)
-      ? 'selected'
-      : states.selectedNodeIds.has(relation.sourceNodeId)
-        || states.selectedNodeIds.has(relation.targetNodeId)
-        ? 'neighbor'
-        : states.hasSelection
-          ? 'dimmed'
-          : 'normal';
+    const selectedState: SelectionState = states.diagRelationIds.has(relation.id)
+      ? 'diagnostic'
+      : states.hasDiagnosticHighlight
+        ? 'dimmed'
+        : states.selectedRelationIds.has(relation.id)
+          ? 'selected'
+          : states.neighborNodeIds.has(relation.sourceNodeId) ||
+            states.neighborNodeIds.has(relation.targetNodeId)
+            ? 'neighbor'
+            : states.hasSelection
+              ? 'dimmed'
+              : 'normal';
+
+    const srcNode = nodeMap.get(relation.sourceNodeId);
+    const tgtNode = nodeMap.get(relation.targetNodeId);
+
+    const firstSection = relation.sections[0];
+    const lastSection = relation.sections.at(-1) ?? firstSection;
+    const sourceSide = srcNode && firstSection
+      ? determinePortSide(srcNode.position, srcNode.size, firstSection.start)
+      : 'right';
+    const targetSide = tgtNode && lastSection
+      ? determinePortSide(tgtNode.position, tgtNode.size, lastSection.end)
+      : 'left';
 
     return {
       id: relation.id,
       type: 'semantic',
       source: relation.sourceNodeId,
       target: relation.targetNodeId,
+      sourceHandle: sourceSide,
+      targetHandle: `${targetSide}-target`,
       selectable: true,
       focusable: true,
       ariaLabel: edgeAccessibleLabel(relation),
@@ -173,6 +224,12 @@ export function toReactFlowElements(
           })),
         },
         selectedState,
+        ...(srcNode !== undefined
+          ? { sourceNode: { position: { ...srcNode.position }, size: { ...srcNode.size } } }
+          : {}),
+        ...(tgtNode !== undefined
+          ? { targetNode: { position: { ...tgtNode.position }, size: { ...tgtNode.size } } }
+          : {}),
         ...(options.onSelectEdge === undefined ? {} : { onSelectEdge: options.onSelectEdge }),
       },
     };

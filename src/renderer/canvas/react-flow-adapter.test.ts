@@ -70,7 +70,13 @@ describe('React Flow adapter and semantic selection', () => {
       type: 'semantic',
       source: 'node:A',
       target: 'node:B',
-      data: { semanticIds: ['reference:A.states'] },
+      sourceHandle: 'right',
+      targetHandle: 'left-target',
+      data: {
+        semanticIds: ['reference:A.states'],
+        sourceNode: { position: { x: 10, y: 20 }, size: { width: 220, height: 100 } },
+        targetNode: { position: { x: 300, y: 20 }, size: { width: 220, height: 70 } },
+      },
     });
     expect(elements.edges[0]?.data?.selectedState).toBe('neighbor');
     expect(elements.edges[0]?.ariaLabel).toBe('association, states 0..*');
@@ -121,5 +127,17 @@ describe('React Flow adapter and semantic selection', () => {
 
     expect(nodeSelected.edges[0]?.data?.selectedState).toBe('neighbor');
     expect(edgeSelected.edges[0]?.data?.selectedState).toBe('selected');
+  });
+
+  it('applies diagnostic highlight state to affected nodes/edges and dims unrelated ones', () => {
+    const elements = toReactFlowElements(layout, {
+      selection: null,
+      highlightedNodeIds: ['node:A'],
+      highlightedRelationIds: ['edge:reference'],
+    });
+
+    expect(elements.nodes[0]?.data.selectedState).toBe('diagnostic');
+    expect(elements.edges[0]?.data?.selectedState).toBe('diagnostic');
+    expect(elements.nodes[1]?.data.selectedState).toBe('dimmed');
   });
 });

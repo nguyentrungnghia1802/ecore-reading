@@ -39,6 +39,7 @@ test.describe('P2-12 Large Model Performance and Exploration Experience', () => 
     await expect(page.getByTestId('focus-chip')).toBeVisible();
 
     // In 1-hop focus, only Entity042 and connected nodes remain visible in canvas
+    await expect(page.locator('.uml-node')).not.toHaveCount(50);
     const visibleCount = await page.locator('.uml-node').count();
     expect(visibleCount).toBeLessThan(50);
     expect(visibleCount).toBeGreaterThanOrEqual(2);

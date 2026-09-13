@@ -2,10 +2,15 @@ import type { EcoreModel } from '../../ecore/model';
 
 interface WorkspaceStatusBarProps {
   model: EcoreModel;
-  layoutStatus?: string;
+  layoutStatus?: string | undefined;
+  onToggleDiagnostics?: (() => void) | undefined;
 }
 
-export function WorkspaceStatusBar({ model, layoutStatus = 'Ready' }: WorkspaceStatusBarProps) {
+export function WorkspaceStatusBar({
+  model,
+  layoutStatus = 'Ready',
+  onToggleDiagnostics,
+}: WorkspaceStatusBarProps) {
   let classCount = 0;
   let enumCount = 0;
   let datatypeCount = 0;
@@ -60,12 +65,31 @@ export function WorkspaceStatusBar({ model, layoutStatus = 'Ready' }: WorkspaceS
       </div>
 
       <div className="status-bar__diagnostics">
-        <span className={`status-bar__badge ${warnings > 0 ? 'status-bar__badge--warning' : ''}`}>
-          {warnings} {warnings === 1 ? 'warning' : 'warnings'}
-        </span>
-        <span className={`status-bar__badge ${errors > 0 ? 'status-bar__badge--error' : ''}`}>
-          {errors} {errors === 1 ? 'error' : 'errors'}
-        </span>
+        {onToggleDiagnostics ? (
+          <button
+            type="button"
+            className="status-bar__diagnostics-trigger"
+            onClick={onToggleDiagnostics}
+            data-testid="status-bar-diagnostics-btn"
+            title="Toggle Diagnostics Panel"
+          >
+            <span className={`status-bar__badge ${warnings > 0 ? 'status-bar__badge--warning' : ''}`}>
+              {warnings} {warnings === 1 ? 'warning' : 'warnings'}
+            </span>
+            <span className={`status-bar__badge ${errors > 0 ? 'status-bar__badge--error' : ''}`}>
+              {errors} {errors === 1 ? 'error' : 'errors'}
+            </span>
+          </button>
+        ) : (
+          <>
+            <span className={`status-bar__badge ${warnings > 0 ? 'status-bar__badge--warning' : ''}`}>
+              {warnings} {warnings === 1 ? 'warning' : 'warnings'}
+            </span>
+            <span className={`status-bar__badge ${errors > 0 ? 'status-bar__badge--error' : ''}`}>
+              {errors} {errors === 1 ? 'error' : 'errors'}
+            </span>
+          </>
+        )}
         <span className="status-bar__sep">•</span>
         <span className="status-bar__status">{layoutStatus}</span>
       </div>

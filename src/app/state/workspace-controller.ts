@@ -36,27 +36,12 @@ export async function loadEcoreDocument(
 
   try {
     const raw = parseRawEcore(source, { sourceName });
-    const errors = raw.diagnostics.filter((diagnostic) => diagnostic.severity === 'error');
-
-    if (errors.length > 0) {
-      return {
-        status: 'error',
-        sourceName,
-        error: {
-          message: errors.map((e) => e.message).join('; ') || `Failed to parse ${sourceName}.`,
-          diagnostics: raw.diagnostics,
-        },
-        selection: null,
-        raw,
-      };
-    }
-
     if (raw.packages.length === 0) {
       return {
         status: 'error',
         sourceName,
         error: {
-          message: `The file "${sourceName}" does not contain any Ecore packages.`,
+          message: raw.diagnostics.map((item) => item.message).join('; ') || `The file "${sourceName}" does not contain any Ecore packages.`,
           diagnostics: raw.diagnostics,
         },
         selection: null,
@@ -65,21 +50,6 @@ export async function loadEcoreDocument(
     }
 
     const model = buildEcoreModel(raw);
-    const modelErrors = model.diagnostics.filter((d) => d.severity === 'error');
-    if (modelErrors.length > 0) {
-      return {
-        status: 'error',
-        sourceName,
-        error: {
-          message: modelErrors.map((e) => e.message).join('; '),
-          diagnostics: model.diagnostics,
-        },
-        selection: null,
-        raw,
-        model,
-      };
-    }
-
     const diagram = buildDiagram(model, diagramOpts);
     const sized = sizeDiagram(diagram);
 
